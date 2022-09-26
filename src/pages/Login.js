@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import {
   DRINKS_TOKEN_KEY,
   MEALS_TOKEN_KEY,
   saveLocalStorageItem,
   USER_KEY,
 } from '../services/localStorageFuncs';
+import RecipesContext from '../context/RecipesContext';
 
 const MIN_PASSWORD_LENGTH = 7;
 function Login(props) {
@@ -16,6 +16,7 @@ function Login(props) {
   };
   const [user, setUser] = useState(INITIAL_STATE);
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
+  const { userDispatch } = useContext(RecipesContext);
 
   const isValidEmail = (inputEmail) => String(inputEmail)
     .toLowerCase()
@@ -33,9 +34,11 @@ function Login(props) {
 
   const handleLoginClickButton = () => {
     const { history } = props;
+    const { email } = user;
     saveLocalStorageItem(USER_KEY, user.email);
     saveLocalStorageItem(DRINKS_TOKEN_KEY, 1);
     saveLocalStorageItem(MEALS_TOKEN_KEY, 1);
+    userDispatch({ type: 'LOGIN', payload: email });
     history.push('/meals');
   };
 
@@ -79,13 +82,10 @@ function Login(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  loginButton: (state) => dispatch(submitLogin(state)) });
-
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;
