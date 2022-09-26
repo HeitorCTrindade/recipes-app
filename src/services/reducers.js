@@ -9,10 +9,16 @@ export const USER_INITIAL_STATE = {
 
 export const recipesReducer = (state = RECIPES_INITIAL_STATE, action) => {
   switch (action.type) {
-  case 'TESTE':
+  case 'Meals to Save':
     return {
       ...state,
-      teste: 'TESTE REDUCER',
+      meals: action.payload,
+    };
+
+  case 'Drinks to Save':
+    return {
+      ...state,
+      drinks: action.payload,
     };
 
   default:
