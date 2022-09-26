@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { act } from 'react-dom/test-utils';
+import { Link } from 'react-router-dom';
 
 import RecipeFilter from '../components/RecipeFilter';
 import RecipesContext from '../context/RecipesContext';
@@ -29,10 +30,11 @@ export default function Meals() {
       Meals
       <RecipeFilter categories={ categories } filterFor="meal" />
       {mealsElements.map((meal, index) => (
-        <div
+        <Link
           key={ index }
           className="card"
           style={ { width: '18rem' } }
+          to={ `/meals/${meal.idMeal}` }
           data-testid={ `${index}-recipe-card` }
         >
           <img
@@ -49,7 +51,7 @@ export default function Meals() {
               {meal.strMeal}
             </h5>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
