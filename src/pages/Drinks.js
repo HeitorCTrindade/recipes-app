@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import searchImg from '../images/searchIcon.svg';
 import Footer from '../components/Footer';
 
-
 export default function Drinks(props) {
   const { history } = props;
   return (
