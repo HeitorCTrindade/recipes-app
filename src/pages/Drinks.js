@@ -1,14 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { act } from 'react-dom/test-utils';
+
+import RecipeFilter from '../components/RecipeFilter';
 import RecipesContext from '../context/RecipesContext';
+import { fetchDrinksCategories } from '../services/fetchCategories';
 
 export default function Drinks() {
   const { recipes } = useContext(RecipesContext);
+  const [drinksElements, setDrinksElements] = useState([]);
+  const [categories, setCategories] = useState([]);
+
   const { drinks } = recipes;
   const TWELVE_FIRST_DRINKS = 12;
-  const drinksElements = drinks.slice(0, TWELVE_FIRST_DRINKS);
+  const FIVE_FIRST_CATEGORIES = 5;
+
+  useEffect(() => {
+    const getDrinks = async () => {
+      act(() => { setDrinksElements(drinks.slice(0, TWELVE_FIRST_DRINKS)); });
+      const drinksCategories = await fetchDrinksCategories();
+      const allCategories = drinksCategories.map((drink) => drink.strCategory);
+      act(() => { setCategories(allCategories.slice(0, FIVE_FIRST_CATEGORIES)); });
+    };
+    getDrinks();
+  }, [drinks]);
+
   return (
     <div>
       Drinks
+      <RecipeFilter categories={ categories } filterFor="drink" />
       {drinksElements.map((drink, index) => (
         <div
           key={ index }

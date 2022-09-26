@@ -1,14 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { act } from 'react-dom/test-utils';
+
+import RecipeFilter from '../components/RecipeFilter';
 import RecipesContext from '../context/RecipesContext';
+import { fetchMealsCategories } from '../services/fetchCategories';
 
 export default function Meals() {
   const { recipes } = useContext(RecipesContext);
+  const [mealsElements, setMealsElements] = useState([]);
+  const [categories, setCategories] = useState([]);
+
   const { meals } = recipes;
   const TWELVE_FIRST_MEALS = 12;
-  const mealsElements = meals.slice(0, TWELVE_FIRST_MEALS);
+  const FIVE_FIRST_CATEGORIES = 5;
+
+  useEffect(() => {
+    const getMeals = async () => {
+      act(() => { setMealsElements(meals.slice(0, TWELVE_FIRST_MEALS)); });
+      const mealsCategories = await fetchMealsCategories();
+      const allCategories = mealsCategories.map((meal) => meal.strCategory);
+      act(() => { setCategories(allCategories.slice(0, FIVE_FIRST_CATEGORIES)); });
+    };
+    getMeals();
+  }, [meals]);
+
   return (
     <div>
       Meals
+      <RecipeFilter categories={ categories } filterFor="meal" />
       {mealsElements.map((meal, index) => (
         <div
           key={ index }

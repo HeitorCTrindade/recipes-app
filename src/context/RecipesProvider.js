@@ -1,7 +1,9 @@
 import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
+import { act } from 'react-dom/test-utils';
 import RecipesContext from './RecipesContext';
+import { MEALS_SAVE, DRINKS_SAVE } from '../constant';
 
 import {
   recipesReducer,
@@ -18,8 +20,8 @@ export default function RecipesProvider({ children }) {
     const getRecipes = async () => {
       const mealsRecipes = await fetchMeals();
       const drinksRecipes = await fetchDrinks();
-      recipesDispatch({ type: 'Meals to Save', payload: mealsRecipes });
-      recipesDispatch({ type: 'Drinks to Save', payload: drinksRecipes });
+      act(() => { recipesDispatch({ type: MEALS_SAVE, payload: mealsRecipes }); });
+      act(() => { recipesDispatch({ type: DRINKS_SAVE, payload: drinksRecipes }); });
     };
     getRecipes();
   }, []);
