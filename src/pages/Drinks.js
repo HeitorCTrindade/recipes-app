@@ -1,17 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { act } from 'react-dom/test-utils';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import RecipeFilter from '../components/RecipeFilter';
 import RecipesContext from '../context/RecipesContext';
 import { fetchDrinksCategories } from '../services/fetchCategories';
+import Header from '../components/Header';
+import searchImg from '../images/searchIcon.svg';
+import Footer from '../components/Footer';
 
-export default function Drinks() {
+export default function Drinks(props) {
   const { recipes } = useContext(RecipesContext);
   const [drinksElements, setDrinksElements] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const { drinks } = recipes;
+  const { history } = props;
   const TWELVE_FIRST_DRINKS = 12;
   const FIVE_FIRST_CATEGORIES = 5;
 
@@ -27,7 +32,11 @@ export default function Drinks() {
 
   return (
     <div>
-      Drinks
+      <Header
+        title="Drinks"
+        search={ searchImg }
+        history={ history }
+      />
       <RecipeFilter categories={ categories } filterFor="drink" />
       {drinksElements.map((drink, index) => (
         <Link
@@ -53,6 +62,13 @@ export default function Drinks() {
           </div>
         </Link>
       ))}
+      <Footer history={ history } />
     </div>
   );
 }
+
+Drinks.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};

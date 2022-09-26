@@ -1,12 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { act } from 'react-dom/test-utils';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import RecipeFilter from '../components/RecipeFilter';
 import RecipesContext from '../context/RecipesContext';
 import { fetchMealsCategories } from '../services/fetchCategories';
+import Header from '../components/Header';
+import searchImg from '../images/searchIcon.svg';
+import Footer from '../components/Footer';
 
-export default function Meals() {
+export default function Meals(props) {
   const { recipes } = useContext(RecipesContext);
   const [mealsElements, setMealsElements] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -14,6 +18,7 @@ export default function Meals() {
   const { meals } = recipes;
   const TWELVE_FIRST_MEALS = 12;
   const FIVE_FIRST_CATEGORIES = 5;
+  const { history } = props;
 
   useEffect(() => {
     const getMeals = async () => {
@@ -27,7 +32,11 @@ export default function Meals() {
 
   return (
     <div>
-      Meals
+      <Header
+        title="Meals"
+        search={ searchImg }
+        history={ history }
+      />
       <RecipeFilter categories={ categories } filterFor="meal" />
       {mealsElements.map((meal, index) => (
         <Link
@@ -53,6 +62,13 @@ export default function Meals() {
           </div>
         </Link>
       ))}
+      <Footer history={ history } />
     </div>
   );
 }
+
+Meals.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
