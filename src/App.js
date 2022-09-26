@@ -29,7 +29,7 @@ function App() {
         <Route
           exact
           path="/meals/:id/in-progress"
-          render={ () => <MealInProgress { ...props } /> }
+          render={ (props) => <MealInProgress { ...props } /> }
         />
         <Route exact path="/drinks" component={ Drinks } />
         <Route
