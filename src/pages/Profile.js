@@ -21,6 +21,7 @@ export default function Profile(props) {
     <div>
       <Header title="Profile" history={ history } />
       <h1 data-testid="profile-email">{userEmail}</h1>
+
       <button
         type="button"
         onClick={ () => {
@@ -31,6 +32,7 @@ export default function Profile(props) {
       >
         Done Recipes
       </button>
+
       <button
         type="button"
         onClick={ () => {
