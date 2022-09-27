@@ -38,8 +38,14 @@ export const INPROGRESS_RECIPES_KEY = 'inProgressRecipes';
 //   }));
 // }
 
-export const readLocalStorage = (ITEM_KEY) => JSON.parse(localStorage
-  .getItem(ITEM_KEY));
+export const readLocalStorage = (ITEM_KEY) => {
+  if (!JSON.parse(localStorage.getItem(USER_KEY))) {
+    localStorage.setItem(USER_KEY, JSON.stringify({
+      email: '',
+    }));
+  }
+  return (JSON.parse(localStorage.getItem(ITEM_KEY)));
+};
 
 export const saveLocalStorageItem = (ITEM_KEY, ITEM_TO_SAVE) => {
   if (ITEM_KEY === USER_KEY) {
