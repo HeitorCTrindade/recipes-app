@@ -85,3 +85,5 @@ export const saveProgressRecipe = (ITEM_TO_SAVE, OBJ_KEY) => {
     }));
   }
 };
+
+export const clearLocalStorage = () => localStorage.clear();
