@@ -22,6 +22,12 @@ export default function RecipeDetails({ details, pathname }) {
     measure: measures[index],
   }));
 
+  const replaceWatch = () => {
+    if (details.strYoutube) {
+      return details.strYoutube.replace('watch?v=', 'embed/');
+    }
+  };
+
   return (
     <div>
       {pathname.includes('meals') && (
@@ -52,7 +58,7 @@ export default function RecipeDetails({ details, pathname }) {
           <iframe
             width="500"
             height="300"
-            src={ details.strYoutube }
+            src={ replaceWatch() }
             data-testid="video"
             allowFullScreen
             title="Embedded youtube"
@@ -67,7 +73,7 @@ export default function RecipeDetails({ details, pathname }) {
             data-testid="recipe-photo"
           />
           <h5 data-testid="recipe-title">{details.strDrink}</h5>
-          <p data-testid="recipe-category">{details.strCategory}</p>
+          <p data-testid="recipe-category">{details.strAlcoholic}</p>
           <ul>
             {ingredientsAndMeasures.length > 0
               && ingredientsAndMeasures.map((el, index) => (
@@ -84,7 +90,6 @@ export default function RecipeDetails({ details, pathname }) {
               ))}
           </ul>
           <p data-testid="instructions">{details.strInstructions}</p>
-          <p>{details.strAlcoholic}</p>
         </div>
       )}
     </div>

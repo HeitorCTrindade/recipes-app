@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import RecipeDetails from '../components/RecipeDetails';
+import PropTypes from 'prop-types';
 
 import { fetchMealDetail } from '../services/fetchDetails';
+import Header from '../components/Header';
+import searchImg from '../images/searchIcon.svg';
+import RecipeDetails from '../components/RecipeDetails';
+import RecipesCarousel from '../components/RecipesCarousel';
+import Footer from '../components/Footer';
 
-export default function MealRecipe() {
+export default function MealRecipe({ history }) {
   const { id } = useParams();
   const location = useLocation();
   const [details, setDetails] = useState({});
@@ -25,10 +30,20 @@ export default function MealRecipe() {
 
   return (
     <div>
-      MealRecipe
-      {' '}
-      {id}
+      <Header
+        title="Meal Recipe"
+        search={ searchImg }
+        history={ history }
+      />
       <RecipeDetails details={ details } pathname={ location.pathname } />
+      <RecipesCarousel />
+      <Footer history={ history } />
     </div>
   );
 }
+
+MealRecipe.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
