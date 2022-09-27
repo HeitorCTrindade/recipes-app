@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { fetchDrinksDetail } from '../services/fetchDetails';
+import RecipeDetails from '../components/RecipeDetails';
 
 export default function DrinkRecipe() {
   const { id } = useParams();
+  const location = useLocation();
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
@@ -15,12 +17,11 @@ export default function DrinkRecipe() {
     recipeDetails();
   }, [id]);
 
-  console.log(details);
   return (
     <div>
-      MealRecipe
+      Drinks:
       {' '}
-      {id}
+      <RecipeDetails details={ details } pathname={ location.pathname } />
     </div>
   );
 }

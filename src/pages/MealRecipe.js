@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import RecipeDetails from '../components/RecipeDetails';
 
 import { fetchMealDetail } from '../services/fetchDetails';
 
 export default function MealRecipe() {
   const { id } = useParams();
-  const [details, setDetails] = useState([]);
+  const location = useLocation();
+  const [details, setDetails] = useState({});
 
   useEffect(() => {
     const recipeDetails = async () => {
@@ -15,12 +17,18 @@ export default function MealRecipe() {
     recipeDetails();
   }, [id]);
 
-  console.log(details);
+  Object.keys(details).forEach((key) => {
+    if (details[key] === null || details[key] === '' || details[key] === ' ') {
+      delete details[key];
+    }
+  });
+
   return (
     <div>
       MealRecipe
       {' '}
       {id}
+      <RecipeDetails details={ details } pathname={ location.pathname } />
     </div>
   );
 }
