@@ -37,6 +37,14 @@ export default function DrinkRecipe({ history }) {
       />
       <RecipeDetails details={ details } pathname={ location.pathname } />
       <RecipesCarousel pathname={ location.pathname } />
+      <button
+        type="button"
+        style={ { position: 'fixed', zIndex: '0', bottom: '0px' } }
+        data-testid="start-recipe-btn"
+      >
+        Iniciar Receita
+
+      </button>
       <Footer history={ history } />
     </div>
   );

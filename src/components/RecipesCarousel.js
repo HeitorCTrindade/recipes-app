@@ -23,8 +23,6 @@ export default function RecipesCarousel({ pathname }) {
     getFive();
   }, [drinks, meals, pathname]);
 
-  console.log(sixRecipes);
-
   return (
     <div>
       {pathname.includes('meals')
