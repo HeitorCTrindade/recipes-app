@@ -36,7 +36,7 @@ export default function MealRecipe({ history }) {
         history={ history }
       />
       <RecipeDetails details={ details } pathname={ location.pathname } />
-      <RecipesCarousel />
+      <RecipesCarousel pathname={ location.pathname } />
       <Footer history={ history } />
     </div>
   );

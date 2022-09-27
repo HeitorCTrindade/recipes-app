@@ -6,6 +6,7 @@ import { fetchDrinksDetail } from '../services/fetchDetails';
 import Header from '../components/Header';
 import searchImg from '../images/searchIcon.svg';
 import RecipeDetails from '../components/RecipeDetails';
+import RecipesCarousel from '../components/RecipesCarousel';
 import Footer from '../components/Footer';
 
 export default function DrinkRecipe({ history }) {
@@ -35,6 +36,7 @@ export default function DrinkRecipe({ history }) {
         history={ history }
       />
       <RecipeDetails details={ details } pathname={ location.pathname } />
+      <RecipesCarousel pathname={ location.pathname } />
       <Footer history={ history } />
     </div>
   );

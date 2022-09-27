@@ -35,6 +35,7 @@ export default function RecipeDetails({ details, pathname }) {
           <img
             src={ details.strMealThumb }
             alt={ details.strMeal }
+            style={ { width: '300px' } }
             data-testid="recipe-photo"
           />
           <h5 data-testid="recipe-title">{details.strMeal}</h5>
@@ -56,8 +57,8 @@ export default function RecipeDetails({ details, pathname }) {
           </ul>
           <p data-testid="instructions">{details.strInstructions}</p>
           <iframe
-            width="500"
-            height="300"
+            width="300"
+            height="200"
             src={ replaceWatch() }
             data-testid="video"
             allowFullScreen
@@ -70,6 +71,7 @@ export default function RecipeDetails({ details, pathname }) {
           <img
             src={ details.strDrinkThumb }
             alt={ details.strDrink }
+            style={ { width: '400px' } }
             data-testid="recipe-photo"
           />
           <h5 data-testid="recipe-title">{details.strDrink}</h5>
