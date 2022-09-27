@@ -38,5 +38,7 @@ export default function Header({ title, search, history }) {
 Header.propTypes = {
   title: PropTypes.string.isRequired,
   search: PropTypes.string.isRequired,
-  history: PropTypes.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
