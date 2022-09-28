@@ -5,15 +5,23 @@ import { fetchDrinksDetail } from '../services/fetchDetails';
 import RecipeDetails from '../components/RecipeDetails';
 import RecipesCarousel from '../components/RecipesCarousel';
 
-import { readLocalStorage, DONERECIPES_KEY } from '../services/localStorageFuncs';
+import {
+  readLocalStorage, DONERECIPES_KEY,
+  INPROGRESS_RECIPES_KEY } from '../services/localStorageFuncs';
 
 export default function DrinkRecipe() {
   const { id } = useParams();
   const location = useLocation();
   const [details, setDetails] = useState({});
   const [doneRecipes, setDoneRecipes] = useState(false);
+  const [inProgress, setInProgress] = useState(false);
 
   useEffect(() => {
+    const checkProgress = (param) => {
+      const checkKey = Object.keys(param.drinks);
+      if (checkKey.includes(id)) { return setInProgress(true); }
+    };
+
     const recipeDetails = async () => {
       const response = await fetchDrinksDetail(id);
       setDetails(...response);
@@ -21,6 +29,10 @@ export default function DrinkRecipe() {
       if (payload !== null) {
         const checkPayload = payload.some((e) => e.id === id);
         setDoneRecipes(checkPayload);
+      }
+      const inProgressStorage = readLocalStorage(INPROGRESS_RECIPES_KEY);
+      if (inProgressStorage !== null) {
+        checkProgress(inProgressStorage);
       }
     };
     recipeDetails();
@@ -42,7 +54,7 @@ export default function DrinkRecipe() {
           style={ { position: 'fixed', zIndex: '0', bottom: '0px' } }
           data-testid="start-recipe-btn"
         >
-          Start Recipe
+          {inProgress === true ? 'Continue Recipe' : 'Start Recipe'}
 
         </button>
       )}

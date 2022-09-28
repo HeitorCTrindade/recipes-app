@@ -5,24 +5,34 @@ import { fetchMealDetail } from '../services/fetchDetails';
 import RecipeDetails from '../components/RecipeDetails';
 import RecipesCarousel from '../components/RecipesCarousel';
 
-import { readLocalStorage, DONERECIPES_KEY } from '../services/localStorageFuncs';
+import {
+  readLocalStorage, DONERECIPES_KEY,
+  INPROGRESS_RECIPES_KEY } from '../services/localStorageFuncs';
 
 export default function MealRecipe() {
   const { id } = useParams();
   const location = useLocation();
   const [details, setDetails] = useState({});
   const [doneRecipes, setDoneRecipes] = useState(false);
+  const [inProgress, setInProgress] = useState(false);
 
   useEffect(() => {
+    const checkProgress = (param) => {
+      const checkKey = Object.keys(param.meals);
+      if (checkKey.includes(id)) { return setInProgress(true); }
+    };
+
     const recipeDetails = async () => {
       const response = await fetchMealDetail(id);
       setDetails(...response);
       const payload = readLocalStorage(DONERECIPES_KEY);
-      console.log(payload);
       if (payload !== null) {
-        console.log('passou aqui?');
         const checkPayload = payload.some((e) => e.id === id);
         setDoneRecipes(checkPayload);
+      }
+      const inProgressStorage = readLocalStorage(INPROGRESS_RECIPES_KEY);
+      if (inProgressStorage !== null) {
+        checkProgress(inProgressStorage);
       }
     };
     recipeDetails();
@@ -34,8 +44,6 @@ export default function MealRecipe() {
     }
   });
 
-  console.log(doneRecipes);
-
   return (
     <div>
       <RecipeDetails details={ details } pathname={ location.pathname } />
@@ -46,7 +54,7 @@ export default function MealRecipe() {
           style={ { position: 'fixed', zIndex: '0', bottom: '0px' } }
           data-testid="start-recipe-btn"
         >
-          Start Recipe
+          {inProgress === true ? 'Continue Recipe' : 'Start Recipe'}
 
         </button>
       )}
