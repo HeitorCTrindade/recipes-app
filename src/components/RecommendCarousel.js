@@ -1,15 +1,26 @@
 import { act } from '@testing-library/react';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'react-multi-carousel';
-import RecipesContext from '../context/RecipesContext';
 import 'react-multi-carousel/lib/styles.css';
+import { fetchMeals, fetchDrinks } from '../services/fetchRecipes';
 
-export default function RecipesCarousel({ pathname }) {
-  const { recipes } = useContext(RecipesContext);
-  const { meals, drinks } = recipes;
+export default function RecommendCarousel({ pathname }) {
+  const [meals, setMeals] = useState([]);
+  const [drinks, setDrinks] = useState([]);
   const [sixRecipes, setSixRecipe] = useState([]);
   const FIRST_SIX = 6;
+
+  useEffect(() => {
+    const fetchApis = async () => {
+      const mealsData = await fetchMeals();
+      act(() => { setMeals(mealsData); });
+
+      const drinksData = await fetchDrinks();
+      act(() => { setDrinks(drinksData); });
+    };
+    fetchApis();
+  }, []);
 
   useEffect(() => {
     const getFive = () => {
@@ -190,6 +201,6 @@ export default function RecipesCarousel({ pathname }) {
   );
 }
 
-RecipesCarousel.propTypes = {
+RecommendCarousel.propTypes = {
   pathname: PropTypes.string.isRequired,
 };
