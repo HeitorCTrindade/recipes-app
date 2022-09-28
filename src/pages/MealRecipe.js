@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useHistory } from 'react-router-dom';
 
 import { fetchMealDetail } from '../services/fetchDetails';
 import RecipeDetails from '../components/RecipeDetails';
@@ -12,6 +12,8 @@ import {
 export default function MealRecipe() {
   const { id } = useParams();
   const location = useLocation();
+  const history = useHistory();
+
   const [details, setDetails] = useState({});
   const [doneRecipes, setDoneRecipes] = useState(false);
   const [inProgress, setInProgress] = useState(false);
@@ -44,6 +46,10 @@ export default function MealRecipe() {
     }
   });
 
+  const handleClick = () => {
+    history.push(`/meals/${id}/in-progress`);
+  };
+
   return (
     <div>
       <RecipeDetails details={ details } pathname={ location.pathname } />
@@ -52,6 +58,7 @@ export default function MealRecipe() {
         <button
           type="button"
           style={ { position: 'fixed', zIndex: '0', bottom: '0px' } }
+          onClick={ handleClick }
           data-testid="start-recipe-btn"
         >
           {inProgress === true ? 'Continue Recipe' : 'Start Recipe'}
