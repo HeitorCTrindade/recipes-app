@@ -1,16 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import clipboard from 'clipboard-copy';
+import shareIcon from '../images/shareIcon.svg';
+
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
+import { saveStorageNewItem, FAV_RECIPES_KEY } from '../services/localStorageFuncs';
+
+import { INITIAL_RECIPE_INFOS } from '../constant';
 
 export default function RecipeDetails({ details, pathname }) {
   const [favRecipe, setFavRecipe] = useState(whiteHeartIcon);
+  const [recipeInfos, setRecipeInfos] = useState(INITIAL_RECIPE_INFOS);
   const [copyRecipe, setCopyRecipe] = useState(false);
   const ingredientsArray = [];
   const measures = [];
+
+  useEffect(() => {
+    const saveRecipesInfos = () => {
+      if (pathname.includes('/meals')) {
+        setRecipeInfos({
+          id: details.idMeal,
+          type: 'meal',
+          nationality: details.strArea,
+          category: details.strCategory,
+          alcoholicOrNot: '',
+          name: details.strMeal,
+          image: details.strMealThumb,
+        });
+      }
+
+      if (pathname.includes('/drinks')) {
+        setRecipeInfos({
+          id: details.idDrink,
+          type: 'drink',
+          nationality: '',
+          category: details.strCategory,
+          alcoholicOrNot: details.strAlcoholic,
+          name: details.strDrink,
+          image: details.strDrinkThumb,
+        });
+      }
+    };
+    saveRecipesInfos();
+  }, [details, pathname]);
 
   Object.keys(details).forEach((key) => {
     if (key.includes('strIngredient')) {
@@ -35,8 +69,13 @@ export default function RecipeDetails({ details, pathname }) {
     }
   };
 
-  const handleClick = () => {
-    console.log('favorita');
+  const favoriteRecipe = () => {
+    if (favRecipe === whiteHeartIcon) {
+      setFavRecipe(blackHeartIcon);
+      saveStorageNewItem(recipeInfos, FAV_RECIPES_KEY);
+    } else {
+      setFavRecipe(whiteHeartIcon);
+    }
   };
 
   const copiedPathname = () => {
@@ -76,7 +115,7 @@ export default function RecipeDetails({ details, pathname }) {
             </div>
           </div>
 
-          <button type="button" onClick={ handleClick } data-testid="favorite-btn">
+          <button type="button" onClick={ favoriteRecipe } data-testid="favorite-btn">
             <img src={ favRecipe } alt="favImage" />
           </button>
 
@@ -157,7 +196,7 @@ export default function RecipeDetails({ details, pathname }) {
               </p>
             </div>
           </div>
-          <button type="button" onClick={ handleClick } data-testid="favorite-btn">
+          <button type="button" onClick={ favoriteRecipe } data-testid="favorite-btn">
             <img src={ favRecipe } alt="favImage" />
           </button>
 
