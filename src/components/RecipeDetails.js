@@ -6,12 +6,14 @@ import shareIcon from '../images/shareIcon.svg';
 
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import { saveStorageNewItem, FAV_RECIPES_KEY } from '../services/localStorageFuncs';
+import {
+  saveStorageNewItem,
+  FAV_RECIPES_KEY, readLocalStorage } from '../services/localStorageFuncs';
 
 import { INITIAL_RECIPE_INFOS } from '../constant';
 
 export default function RecipeDetails({ details, pathname }) {
-  const [favRecipe, setFavRecipe] = useState(whiteHeartIcon);
+  const [heartIcon, setHeartIcon] = useState(whiteHeartIcon);
   const [recipeInfos, setRecipeInfos] = useState(INITIAL_RECIPE_INFOS);
   const [copyRecipe, setCopyRecipe] = useState(false);
   const ingredientsArray = [];
@@ -46,6 +48,19 @@ export default function RecipeDetails({ details, pathname }) {
     saveRecipesInfos();
   }, [details, pathname]);
 
+  useEffect(() => {
+    const readFavs = () => {
+      const storageFavs = readLocalStorage(FAV_RECIPES_KEY);
+      if (storageFavs !== null) {
+        const checkStorage = storageFavs.some((e) => e.id === recipeInfos.id);
+        if (checkStorage === true) {
+          setHeartIcon(blackHeartIcon);
+        }
+      }
+    };
+    readFavs();
+  }, [recipeInfos]);
+
   Object.keys(details).forEach((key) => {
     if (key.includes('strIngredient')) {
       ingredientsArray.push(details[key]);
@@ -70,11 +85,11 @@ export default function RecipeDetails({ details, pathname }) {
   };
 
   const favoriteRecipe = () => {
-    if (favRecipe === whiteHeartIcon) {
-      setFavRecipe(blackHeartIcon);
+    if (heartIcon === whiteHeartIcon) {
+      setHeartIcon(blackHeartIcon);
       saveStorageNewItem(recipeInfos, FAV_RECIPES_KEY);
     } else {
-      setFavRecipe(whiteHeartIcon);
+      setHeartIcon(whiteHeartIcon);
     }
   };
 
@@ -85,50 +100,50 @@ export default function RecipeDetails({ details, pathname }) {
 
   return (
     <div>
-      {pathname.includes('meals') && (
-        <div>
-          <div className="card text-bg-dark" style={ { width: '362px' } }>
-            <img
-              src={ details.strMealThumb }
-              alt={ details.strMeal }
-              style={ { width: '362px' } }
-              className="card-img"
-              data-testid="recipe-photo"
-            />
-            <div className="card-img-overlay">
-              <h4
-                className="card-title"
-                style={ { color: 'black' } }
-                data-testid="recipe-title"
-              >
-                {details.strMeal}
+      <div>
+        <div className="card text-bg-dark" style={ { width: '362px' } }>
+          <img
+            src={ recipeInfos.image }
+            alt={ recipeInfos.name }
+            style={ { width: '362px' } }
+            className="card-img"
+            data-testid="recipe-photo"
+          />
+          <div className="card-img-overlay">
+            <h4
+              className="card-title"
+              style={ { color: 'black' } }
+              data-testid="recipe-title"
+            >
+              {recipeInfos.name}
 
-              </h4>
-              <p
-                className="card-text"
-                style={ { color: 'black' } }
-                data-testid="recipe-category"
-              >
-                {details.strCategory}
+            </h4>
+            <p
+              className="card-text"
+              style={ { color: 'black' } }
+              data-testid="recipe-category"
+            >
+              {recipeInfos.type === 'meal'
+                ? recipeInfos.category : recipeInfos.alcoholicOrNot}
 
-              </p>
-            </div>
+            </p>
           </div>
+        </div>
 
-          <button type="button" onClick={ favoriteRecipe } data-testid="favorite-btn">
-            <img src={ favRecipe } alt="favImage" />
-          </button>
+        <button type="button" onClick={ favoriteRecipe }>
+          <img src={ heartIcon } alt="favImage" data-testid="favorite-btn" />
+        </button>
 
-          <button type="button" onClick={ copiedPathname } data-testid="share-btn">
-            <img src={ shareIcon } alt="favImage" />
-          </button>
+        <button type="button" onClick={ copiedPathname }>
+          <img src={ shareIcon } alt="favImage" data-testid="share-btn" />
+        </button>
 
-          {copyRecipe && <span>Link copied!</span>}
+        {copyRecipe && <span>Link copied!</span>}
 
-          <h4>Ingredients</h4>
-          <div className="card" style={ { width: '335px', margin: '12px' } }>
-            <ul className="list-group list-group-flush">
-              {ingredientsAndMeasures.length > 0
+        <h4>Ingredients</h4>
+        <div className="card" style={ { width: '335px', margin: '12px' } }>
+          <ul className="list-group list-group-flush">
+            {ingredientsAndMeasures.length > 0
               && ingredientsAndMeasures.map((e, index) => (
                 <li
                   key={ index }
@@ -142,100 +157,35 @@ export default function RecipeDetails({ details, pathname }) {
                   {e.measure}
                 </li>
               ))}
-            </ul>
-          </div>
-
-          <h4>Instructions</h4>
-          <div className="card" style={ { width: '335px', margin: '12px' } }>
-            <p
-              className="card-text text-start"
-              style={ { padding: '5px' } }
-              data-testid="instructions"
-            >
-              {details.strInstructions}
-
-            </p>
-          </div>
-          <h4>Video</h4>
-          <iframe
-            width="300"
-            height="200"
-            src={ replaceWatch() }
-            data-testid="video"
-            allowFullScreen
-            title="Embedded youtube"
-          />
+          </ul>
         </div>
-      )}
-      {pathname.includes('drinks') && (
-        <div>
-          <div className="card text-bg-dark" style={ { width: '362px' } }>
-            <img
-              src={ details.strDrinkThumb }
-              alt={ details.strDrink }
-              style={ { width: '362px' } }
-              className="card-img"
-              data-testid="recipe-photo"
+
+        <h4>Instructions</h4>
+        <div className="card" style={ { width: '335px', margin: '12px' } }>
+          <p
+            className="card-text text-start"
+            style={ { padding: '5px' } }
+            data-testid="instructions"
+          >
+            {details.strInstructions}
+
+          </p>
+        </div>
+
+        {recipeInfos.type === 'meal' && (
+          <div>
+            <h4>Video</h4>
+            <iframe
+              width="300"
+              height="200"
+              src={ replaceWatch() }
+              data-testid="video"
+              allowFullScreen
+              title="Embedded youtube"
             />
-            <div className="card-img-overlay">
-              <h4
-                className="card-title"
-                style={ { color: 'black' } }
-                data-testid="recipe-title"
-              >
-                {details.strDrink}
-
-              </h4>
-              <p
-                className="card-text"
-                style={ { color: 'black' } }
-                data-testid="recipe-category"
-              >
-                {details.strAlcoholic}
-
-              </p>
-            </div>
           </div>
-          <button type="button" onClick={ favoriteRecipe } data-testid="favorite-btn">
-            <img src={ favRecipe } alt="favImage" />
-          </button>
-
-          <button type="button" onClick={ copiedPathname } data-testid="share-btn">
-            <img src={ shareIcon } alt="favImage" />
-          </button>
-
-          {copyRecipe && <span>Link copied!</span>}
-          <h4>Ingredients</h4>
-          <div className="card" style={ { width: '335px', margin: '12px' } }>
-            <ul>
-              {ingredientsAndMeasures.length > 0
-              && ingredientsAndMeasures.map((el, index) => (
-                <li
-                  key={ index }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                  className="list-group-item"
-                >
-                  {el.ingredient}
-                  {' '}
-                  -
-                  {' '}
-                  {el.measure}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <h4>Instructions</h4>
-          <div className="card" style={ { width: '335px', margin: '12px' } }>
-            <p
-              className="card-text text-start"
-              style={ { padding: '5px' } }
-              data-testid="instructions"
-            >
-              {details.strInstructions}
-            </p>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
