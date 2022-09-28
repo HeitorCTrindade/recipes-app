@@ -1,4 +1,4 @@
-const doneRecipesLocalStorageMock = [{
+const doneRecipesMock = [{
   id: '213',
   type: 'meal',
   nationality: 'nacionalidade-da-receita',
@@ -32,4 +32,4 @@ const doneRecipesLocalStorageMock = [{
   tags: [],
 }];
 
-export default doneRecipesLocalStorageMock;
+export default doneRecipesMock;

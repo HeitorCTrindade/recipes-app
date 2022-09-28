@@ -7,39 +7,6 @@ import {
 } from '../services/localStorageFuncs';
 import shareIcon from '../images/shareIcon.svg';
 
-// const testLocalStorageArray = [{
-//   id: '213',
-//   type: 'meal',
-//   nationality: 'nacionalidade-da-receita',
-//   category: 'categoria-da-receita-ou-texto-vazio',
-//   alcoholicOrNot: 'alcoholic-ou-non-alcoholic-ou-texto-vazio',
-//   name: 'nome-da-receita-1',
-//   image: 'imagem-da-receita1',
-//   doneDate: '12/08/2021',
-//   tags: ['deu', 'bom', 'demais'],
-// },
-// {
-//   id: '321',
-//   type: 'meal',
-//   nationality: 'nacionalidade-da-receita-ou-',
-//   category: 'categoria-da-receita',
-//   alcoholicOrNot: '',
-//   name: 'nome-da-receita-2',
-//   image: 'imagem-da-receita2',
-//   doneDate: '31/05/2015',
-//   tags: ['deu', 'bom', 'demais'],
-// },
-// {
-//   id: '123',
-//   type: 'drink',
-//   nationality: '',
-//   category: 'xablau',
-//   alcoholicOrNot: 'alcoholic',
-//   name: 'nome-da-receita-drink',
-//   image: 'imagem-da-receita-drink',
-//   doneDate: '01/01/2021',
-//   tags: [],
-// }];
 const copy = require('clipboard-copy');
 
 export default function DoneRecipes() {
@@ -49,15 +16,13 @@ export default function DoneRecipes() {
 
   useEffect(() => {
     setDoneRecipes(readLocalStorage(DONERECIPES_KEY));
-    // setDoneRecipes(testLocalStorageArray);
   }, []);
 
   const handleClickShareButton = (recipeType, recipeId) => {
     const currentURL = window.location.host;
-    // global.alert('Link copied!');
     setIsLinkCopied(true);
     if (recipeType === 'meal') copy(`http://${currentURL}/meals/${recipeId}`);
-    else copy(`/drinks/${recipeId}`);
+    else copy(`http://${currentURL}/drinks/${recipeId}`);
   };
 
   const handleClickFilterByMealsButton = () => {
@@ -75,7 +40,7 @@ export default function DoneRecipes() {
   };
 
   const generateMealCard = (mealObj, index) => (
-    <div key={ mealObj.id }>
+    <div key={ mealObj.id } data-testid={ mealObj.id }>
       <div className="card">
         <Link
           to={ `/meals/${mealObj.id}` }
@@ -104,6 +69,7 @@ export default function DoneRecipes() {
           </h3>
           <button
             type="button"
+            data-testid={ `shareButton-${mealObj.id}` }
             onClick={ () => {
               handleClickShareButton(mealObj.type, mealObj.id);
             } }
@@ -133,7 +99,7 @@ export default function DoneRecipes() {
   );
 
   const generateDrinkCard = (drinkObj, index) => (
-    <div key={ drinkObj.id }>
+    <div key={ drinkObj.id } data-testid={ drinkObj.id }>
       <div className="card">
         <Link
           to={ `/drinks/${drinkObj.id}` }
@@ -162,8 +128,9 @@ export default function DoneRecipes() {
           </h3>
           <button
             type="button"
+            data-testid={ `shareButton-${drinkObj.id}` }
             onClick={ () => {
-              handleClickShareButton(mealObj.type, mealObj.id);
+              handleClickShareButton(drinkObj.type, drinkObj.id);
             } }
             className="btn btn-warning"
           >
