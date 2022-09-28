@@ -44,6 +44,9 @@ export const readLocalStorage = (ITEM_KEY) => {
       email: '',
     }));
   }
+  if (!JSON.parse(localStorage.getItem(DONERECIPES_KEY))) {
+    localStorage.setItem(DONERECIPES_KEY, JSON.stringify([]));
+  }
   return (JSON.parse(localStorage.getItem(ITEM_KEY)));
 };
 
