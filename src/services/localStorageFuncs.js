@@ -60,7 +60,10 @@ export const saveLocalStorageItem = (ITEM_KEY, ITEM_TO_SAVE) => {
 
 export const saveStorageNewItem = (ITEM_TO_SAVE, ITEM_KEY) => {
   if (ITEM_TO_SAVE) {
-    const allItems = readLocalStorage(ITEM_KEY);
+    let allItems = readLocalStorage(ITEM_KEY);
+    if (allItems === null) {
+      allItems = [];
+    }
     saveLocalStorageItem(ITEM_KEY, [...allItems, ITEM_TO_SAVE]);
   }
 };

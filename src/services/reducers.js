@@ -1,4 +1,4 @@
-import { MEALS_SAVE, DRINKS_SAVE } from '../constant';
+import { MEALS_SAVE, DRINKS_SAVE, SAVE_DETAIL } from '../constant';
 
 export const RECIPES_INITIAL_STATE = {
   meals: [],
@@ -21,6 +21,12 @@ export const recipesReducer = (state = RECIPES_INITIAL_STATE, action) => {
     return {
       ...state,
       drinks: action.payload,
+    };
+
+  case SAVE_DETAIL:
+    return {
+      ...state,
+      details: action.payload,
     };
 
   default:
