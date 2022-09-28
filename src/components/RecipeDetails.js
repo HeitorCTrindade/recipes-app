@@ -32,20 +32,42 @@ export default function RecipeDetails({ details, pathname }) {
     <div>
       {pathname.includes('meals') && (
         <div>
-          <img
-            src={ details.strMealThumb }
-            alt={ details.strMeal }
-            style={ { width: '300px' } }
-            data-testid="recipe-photo"
-          />
-          <h5 data-testid="recipe-title">{details.strMeal}</h5>
-          <p data-testid="recipe-category">{details.strCategory}</p>
-          <ul>
-            {ingredientsAndMeasures.length > 0
+          <div className="card text-bg-dark" style={ { width: '362px' } }>
+            <img
+              src={ details.strMealThumb }
+              alt={ details.strMeal }
+              style={ { width: '362px' } }
+              className="card-img"
+              data-testid="recipe-photo"
+            />
+            <div className="card-img-overlay">
+              <h4
+                className="card-title"
+                style={ { color: 'black' } }
+                data-testid="recipe-title"
+              >
+                {details.strMeal}
+
+              </h4>
+              <p
+                className="card-text"
+                style={ { color: 'black' } }
+                data-testid="recipe-category"
+              >
+                {details.strCategory}
+
+              </p>
+            </div>
+          </div>
+          <h4>Ingredients</h4>
+          <div className="card" style={ { width: '335px', margin: '12px' } }>
+            <ul className="list-group list-group-flush">
+              {ingredientsAndMeasures.length > 0
               && ingredientsAndMeasures.map((e, index) => (
                 <li
                   key={ index }
                   data-testid={ `${index}-ingredient-name-and-measure` }
+                  className="list-group-item"
                 >
                   {e.ingredient}
                   {' '}
@@ -54,8 +76,21 @@ export default function RecipeDetails({ details, pathname }) {
                   {e.measure}
                 </li>
               ))}
-          </ul>
-          <p data-testid="instructions">{details.strInstructions}</p>
+            </ul>
+          </div>
+
+          <h4>Instructions</h4>
+          <div className="card" style={ { width: '335px', margin: '12px' } }>
+            <p
+              className="card-text text-start"
+              style={ { padding: '5px' } }
+              data-testid="instructions"
+            >
+              {details.strInstructions}
+
+            </p>
+          </div>
+          <h4>Video</h4>
           <iframe
             width="300"
             height="200"
@@ -74,7 +109,7 @@ export default function RecipeDetails({ details, pathname }) {
             style={ { width: '400px' } }
             data-testid="recipe-photo"
           />
-          <h5 data-testid="recipe-title">{details.strDrink}</h5>
+          <h4 data-testid="recipe-title">{details.strDrink}</h4>
           <p data-testid="recipe-category">{details.strAlcoholic}</p>
           <ul>
             {ingredientsAndMeasures.length > 0

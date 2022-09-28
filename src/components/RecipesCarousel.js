@@ -25,6 +25,7 @@ export default function RecipesCarousel({ pathname }) {
 
   return (
     <div>
+      <h6>Recommended</h6>
       {pathname.includes('meals')
       && (
         <Carousel

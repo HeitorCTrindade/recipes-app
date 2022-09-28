@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { fetchMealDetail } from '../services/fetchDetails';
-import Header from '../components/Header';
-import searchImg from '../images/searchIcon.svg';
 import RecipeDetails from '../components/RecipeDetails';
 import RecipesCarousel from '../components/RecipesCarousel';
-import Footer from '../components/Footer';
 
-export default function MealRecipe({ history }) {
+import { readLocalStorage, DONERECIPES_KEY } from '../services/localStorageFuncs';
+
+export default function MealRecipe() {
   const { id } = useParams();
   const location = useLocation();
   const [details, setDetails] = useState({});
+  const [doneRecipes, setDoneRecipes] = useState(false);
 
   useEffect(() => {
     const recipeDetails = async () => {
       const response = await fetchMealDetail(id);
       setDetails(...response);
+      const payload = readLocalStorage(DONERECIPES_KEY);
+      console.log(payload);
+      if (payload !== null) {
+        console.log('passou aqui?');
+        const checkPayload = payload.some((e) => e.id === id);
+        setDoneRecipes(checkPayload);
+      }
     };
     recipeDetails();
   }, [id]);
@@ -28,30 +34,22 @@ export default function MealRecipe({ history }) {
     }
   });
 
+  console.log(doneRecipes);
+
   return (
     <div>
-      <Header
-        title="Meal Recipe"
-        search={ searchImg }
-        history={ history }
-      />
       <RecipeDetails details={ details } pathname={ location.pathname } />
       <RecipesCarousel pathname={ location.pathname } />
-      <button
-        type="button"
-        style={ { position: 'fixed', zIndex: '0', bottom: '0px' } }
-        data-testid="start-recipe-btn"
-      >
-        Iniciar Receita
+      {doneRecipes === false && (
+        <button
+          type="button"
+          style={ { position: 'fixed', zIndex: '0', bottom: '0px' } }
+          data-testid="start-recipe-btn"
+        >
+          Start Recipe
 
-      </button>
-      <Footer history={ history } />
+        </button>
+      )}
     </div>
   );
 }
-
-MealRecipe.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
