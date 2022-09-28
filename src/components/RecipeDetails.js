@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import clipboard from 'clipboard-copy';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
+
 export default function RecipeDetails({ details, pathname }) {
+  const [favRecipe, setFavRecipe] = useState(whiteHeartIcon);
+  const [copyRecipe, setCopyRecipe] = useState(false);
   const ingredientsArray = [];
   const measures = [];
 
@@ -26,6 +33,15 @@ export default function RecipeDetails({ details, pathname }) {
     if (details.strYoutube) {
       return details.strYoutube.replace('watch?v=', 'embed/');
     }
+  };
+
+  const handleClick = () => {
+    console.log('favorita');
+  };
+
+  const copiedPathname = () => {
+    clipboard(`http://localhost:3000${pathname}`);
+    setCopyRecipe(true);
   };
 
   return (
@@ -59,6 +75,17 @@ export default function RecipeDetails({ details, pathname }) {
               </p>
             </div>
           </div>
+
+          <button type="button" onClick={ handleClick } data-testid="favorite-btn">
+            <img src={ favRecipe } alt="favImage" />
+          </button>
+
+          <button type="button" onClick={ copiedPathname } data-testid="share-btn">
+            <img src={ shareIcon } alt="favImage" />
+          </button>
+
+          {copyRecipe && <span>Link copied!</span>}
+
           <h4>Ingredients</h4>
           <div className="card" style={ { width: '335px', margin: '12px' } }>
             <ul className="list-group list-group-flush">
@@ -103,20 +130,51 @@ export default function RecipeDetails({ details, pathname }) {
       )}
       {pathname.includes('drinks') && (
         <div>
-          <img
-            src={ details.strDrinkThumb }
-            alt={ details.strDrink }
-            style={ { width: '400px' } }
-            data-testid="recipe-photo"
-          />
-          <h4 data-testid="recipe-title">{details.strDrink}</h4>
-          <p data-testid="recipe-category">{details.strAlcoholic}</p>
-          <ul>
-            {ingredientsAndMeasures.length > 0
+          <div className="card text-bg-dark" style={ { width: '362px' } }>
+            <img
+              src={ details.strDrinkThumb }
+              alt={ details.strDrink }
+              style={ { width: '362px' } }
+              className="card-img"
+              data-testid="recipe-photo"
+            />
+            <div className="card-img-overlay">
+              <h4
+                className="card-title"
+                style={ { color: 'black' } }
+                data-testid="recipe-title"
+              >
+                {details.strDrink}
+
+              </h4>
+              <p
+                className="card-text"
+                style={ { color: 'black' } }
+                data-testid="recipe-category"
+              >
+                {details.strAlcoholic}
+
+              </p>
+            </div>
+          </div>
+          <button type="button" onClick={ handleClick } data-testid="favorite-btn">
+            <img src={ favRecipe } alt="favImage" />
+          </button>
+
+          <button type="button" onClick={ copiedPathname } data-testid="share-btn">
+            <img src={ shareIcon } alt="favImage" />
+          </button>
+
+          {copyRecipe && <span>Link copied!</span>}
+          <h4>Ingredients</h4>
+          <div className="card" style={ { width: '335px', margin: '12px' } }>
+            <ul>
+              {ingredientsAndMeasures.length > 0
               && ingredientsAndMeasures.map((el, index) => (
                 <li
                   key={ index }
                   data-testid={ `${index}-ingredient-name-and-measure` }
+                  className="list-group-item"
                 >
                   {el.ingredient}
                   {' '}
@@ -125,8 +183,18 @@ export default function RecipeDetails({ details, pathname }) {
                   {el.measure}
                 </li>
               ))}
-          </ul>
-          <p data-testid="instructions">{details.strInstructions}</p>
+            </ul>
+          </div>
+          <h4>Instructions</h4>
+          <div className="card" style={ { width: '335px', margin: '12px' } }>
+            <p
+              className="card-text text-start"
+              style={ { padding: '5px' } }
+              data-testid="instructions"
+            >
+              {details.strInstructions}
+            </p>
+          </div>
         </div>
       )}
     </div>
