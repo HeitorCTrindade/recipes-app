@@ -31,18 +31,18 @@ export default function RecipeFilter(props) {
       const response = await request.json();
       const data = response.meals;
       act(() => { recipesDispatch({ type: MEALS_SAVE, payload: data }); });
-      setToggle(true);
+      act(() => { setToggle(true); });
     }
     if (filterFor === 'drink' && !toggle) {
       const request = await fetch(`${DRINK_API}${element}`);
       const response = await request.json();
       const data = response.drinks;
       act(() => { recipesDispatch({ type: DRINKS_SAVE, payload: data }); });
-      setToggle(true);
+      act(() => { setToggle(true); });
     }
     if (toggle) {
       handleAllFilter();
-      setToggle(false);
+      act(() => { setToggle(false); });
     }
   };
 

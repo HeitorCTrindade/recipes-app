@@ -10,8 +10,11 @@ import Header from '../components/Header';
 import searchImg from '../images/searchIcon.svg';
 import Footer from '../components/Footer';
 
+import { fetchMeals } from '../services/fetchRecipes';
+import { MEALS_SAVE } from '../constant';
+
 export default function Meals(props) {
-  const { recipes } = useContext(RecipesContext);
+  const { recipes, recipesDispatch } = useContext(RecipesContext);
   const [mealsElements, setMealsElements] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -21,11 +24,20 @@ export default function Meals(props) {
   const { history } = props;
 
   useEffect(() => {
-    const getMeals = async () => {
-      act(() => { setMealsElements(meals.slice(0, TWELVE_FIRST_MEALS)); });
+    const fetchApis = async () => {
+      const mealsRecipes = await fetchMeals();
+      act(() => { recipesDispatch({ type: MEALS_SAVE, payload: mealsRecipes }); });
+
       const mealsCategories = await fetchMealsCategories();
       const allCategories = mealsCategories.map((meal) => meal.strCategory);
       act(() => { setCategories(allCategories.slice(0, FIVE_FIRST_CATEGORIES)); });
+    };
+    fetchApis();
+  }, [recipesDispatch]);
+
+  useEffect(() => {
+    const getMeals = () => {
+      setMealsElements(meals.slice(0, TWELVE_FIRST_MEALS));
     };
     getMeals();
   }, [meals]);
