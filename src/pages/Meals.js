@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { act } from 'react-dom/test-utils';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import RecipeFilter from '../components/RecipeFilter';
 import RecipesContext from '../context/RecipesContext';
 import { fetchMealsCategories } from '../services/fetchCategories';
 import Header from '../components/Header';
@@ -12,6 +10,7 @@ import Footer from '../components/Footer';
 
 import { fetchMeals } from '../services/fetchRecipes';
 import { MEALS_SAVE } from '../constant';
+import Recipes from '../components/Recipes';
 
 export default function Meals(props) {
   const { recipes, recipesDispatch } = useContext(RecipesContext);
@@ -49,31 +48,11 @@ export default function Meals(props) {
         search={ searchImg }
         history={ history }
       />
-      <RecipeFilter categories={ categories } filterFor="meal" />
-      {mealsElements.map((meal, index) => (
-        <Link
-          key={ index }
-          className="card"
-          style={ { width: '18rem' } }
-          to={ `/meals/${meal.idMeal}` }
-          data-testid={ `${index}-recipe-card` }
-        >
-          <img
-            className="card-img-top"
-            data-testid={ `${index}-card-img` }
-            src={ meal.strMealThumb }
-            alt={ meal.strMeal }
-          />
-          <div className="card-body">
-            <h5
-              className="card-title"
-              data-testid={ `${index}-card-name` }
-            >
-              {meal.strMeal}
-            </h5>
-          </div>
-        </Link>
-      ))}
+      <Recipes
+        recipesList={ mealsElements }
+        categories={ categories }
+        recipesFor="meal"
+      />
       <Footer history={ history } />
     </div>
   );

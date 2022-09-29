@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { act } from 'react-dom/test-utils';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { fetchDrinks } from '../services/fetchRecipes';
 import { DRINKS_SAVE } from '../constant';
 
-import RecipeFilter from '../components/RecipeFilter';
 import RecipesContext from '../context/RecipesContext';
 import { fetchDrinksCategories } from '../services/fetchCategories';
 import Header from '../components/Header';
+import Recipes from '../components/Recipes';
 import searchImg from '../images/searchIcon.svg';
 import Footer from '../components/Footer';
 
@@ -49,31 +48,11 @@ export default function Drinks(props) {
         search={ searchImg }
         history={ history }
       />
-      <RecipeFilter categories={ categories } filterFor="drink" />
-      {drinksElements.map((drink, index) => (
-        <Link
-          key={ index }
-          className="card"
-          style={ { width: '18rem' } }
-          to={ `/drinks/${drink.idDrink}` }
-          data-testid={ `${index}-recipe-card` }
-        >
-          <img
-            className="card-img-top"
-            data-testid={ `${index}-card-img` }
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
-          />
-          <div className="card-body">
-            <h5
-              className="card-title"
-              data-testid={ `${index}-card-name` }
-            >
-              {drink.strDrink}
-            </h5>
-          </div>
-        </Link>
-      ))}
+      <Recipes
+        recipesList={ drinksElements }
+        categories={ categories }
+        recipesFor="drink"
+      />
       <Footer history={ history } />
     </div>
   );
