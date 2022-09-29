@@ -1,6 +1,8 @@
 export const MEALS_SAVE = 'Meals to Save';
 export const DRINKS_SAVE = 'Drinks to Save';
 export const SAVE_DETAIL = 'Save details';
+export const SAVE_MEAL_CATEGORIE = 'Save meal categorie';
+export const SAVE_DRINK_CATEGORIE = 'Save drink categorie';
 
 export const INITIAL_RECIPE_INFOS = {
   id: 'id - da - receita',

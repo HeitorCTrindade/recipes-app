@@ -1,4 +1,5 @@
-import { MEALS_SAVE, DRINKS_SAVE, SAVE_DETAIL } from '../constant';
+import { MEALS_SAVE, DRINKS_SAVE,
+  SAVE_DETAIL } from '../constant';
 
 export const RECIPES_INITIAL_STATE = {
   meals: [],

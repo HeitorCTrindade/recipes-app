@@ -66,7 +66,7 @@ describe('Test the Login page', () => {
     userEvent.type(inputPassword, testUserPassword);
     userEvent.click(button);
 
-    expect(history.location.pathname).toBe('/foods');
+    expect(history.location.pathname).toBe('/meals');
 
     const mealsTokenLocalStorage = localStorage.getItem('mealsToken');
     const drinksTokenLocalStorage = localStorage.getItem('drinksToken');

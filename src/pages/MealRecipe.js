@@ -3,7 +3,7 @@ import { useLocation, useParams, useHistory } from 'react-router-dom';
 
 import { fetchMealDetail } from '../services/fetchDetails';
 import RecipeDetails from '../components/RecipeDetails';
-import RecipesCarousel from '../components/RecipesCarousel';
+import RecommendCarousel from '../components/RecommendCarousel';
 
 import {
   readLocalStorage, DONERECIPES_KEY,
@@ -53,7 +53,7 @@ export default function MealRecipe() {
   return (
     <div>
       <RecipeDetails details={ details } pathname={ location.pathname } />
-      <RecipesCarousel pathname={ location.pathname } />
+      <RecommendCarousel pathname={ location.pathname } />
       {doneRecipes === false && (
         <button
           type="button"
