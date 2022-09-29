@@ -48,12 +48,12 @@ describe('Test the SearchBar Component', () => {
     expect(firstLetter).toBeInTheDocument();
     expect(filterBtn).toBeInTheDocument();
 
-    userEvent.type(input, 'egg cream');
-    expect(input).toHaveValue('egg cream');
+    userEvent.type(input, 'gg');
+    expect(input).toHaveValue('gg');
     userEvent.click(name);
     userEvent.click(filterBtn);
     await waitFor(() => {
-      expect(history.location.pathname).toBe('/drinks/12668');
+      expect(history.location.pathname).toBe('/drinks/15997');
     });
   });
 });
