@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams, useHistory } from 'react-router-dom';
 
+import { act } from '@testing-library/react';
 import { fetchMealDetail } from '../services/fetchDetails';
 import RecipeDetails from '../components/RecipeDetails';
 import RecommendCarousel from '../components/RecommendCarousel';
@@ -26,7 +27,7 @@ export default function MealRecipe() {
 
     const recipeDetails = async () => {
       const response = await fetchMealDetail(id);
-      setDetails(...response);
+      act(() => { setDetails(...response); });
       const payload = readLocalStorage(DONERECIPES_KEY);
       if (payload !== null) {
         const checkPayload = payload.some((e) => e.id === id);
