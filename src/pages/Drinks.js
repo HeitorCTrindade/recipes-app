@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { act } from 'react-dom/test-utils';
 import PropTypes from 'prop-types';
 
+import { useLocation } from 'react-router-dom';
+
 import { fetchDrinks } from '../services/fetchRecipes';
 import { DRINKS_SAVE } from '../constant';
-
 import RecipesContext from '../context/RecipesContext';
 import { fetchDrinksCategories } from '../services/fetchCategories';
 import Header from '../components/Header';
@@ -16,6 +17,9 @@ export default function Drinks(props) {
   const { recipes, recipesDispatch } = useContext(RecipesContext);
   const [drinksElements, setDrinksElements] = useState([]);
   const [categories, setCategories] = useState([]);
+
+  const location = useLocation();
+  const { pathname } = location;
 
   const { drinks } = recipes;
   const { history } = props;
@@ -36,7 +40,9 @@ export default function Drinks(props) {
 
   useEffect(() => {
     const getDrinks = () => {
-      setDrinksElements(drinks.slice(0, TWELVE_FIRST_DRINKS));
+      if (drinks !== null) {
+        setDrinksElements(drinks.slice(0, TWELVE_FIRST_DRINKS));
+      }
     };
     getDrinks();
   }, [drinks]);
@@ -47,6 +53,7 @@ export default function Drinks(props) {
         title="Drinks"
         search={ searchImg }
         history={ history }
+        path={ pathname }
       />
       <Recipes
         recipesList={ drinksElements }

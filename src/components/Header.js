@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import profileImg from '../images/profileIcon.svg';
+import SearchBar from './SearchBar';
 
-export default function Header({ title, search, history }) {
+export default function Header({ title, search, history, path }) {
   const [toggle, setToggle] = useState(false);
   const handleClick = () => {
     history.push('/profile');
@@ -20,7 +21,7 @@ export default function Header({ title, search, history }) {
         <img data-testid="profile-top-btn" src={ profileImg } alt="Profile-icon" />
       </button>
 
-      {search !== undefined
+      {search !== ''
         ? (
           <button type="button" onClick={ handleToggle }>
             <img
@@ -30,7 +31,7 @@ export default function Header({ title, search, history }) {
             />
           </button>)
         : '' }
-      {toggle ? <input data-testid="search-input" type="text" /> : null }
+      {toggle ? <SearchBar path={ path } history={ history } /> : null }
 
     </header>
   );
@@ -41,4 +42,6 @@ Header.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  path: PropTypes.string.isRequired,
+
 };

@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { act } from 'react-dom/test-utils';
 import PropTypes from 'prop-types';
 
+import { useLocation } from 'react-router-dom';
+
 import RecipesContext from '../context/RecipesContext';
 import { fetchMealsCategories } from '../services/fetchCategories';
 import Header from '../components/Header';
@@ -22,6 +24,9 @@ export default function Meals(props) {
   const FIVE_FIRST_CATEGORIES = 5;
   const { history } = props;
 
+  const location = useLocation();
+  const { pathname } = location;
+
   useEffect(() => {
     const fetchApis = async () => {
       const mealsRecipes = await fetchMeals();
@@ -36,7 +41,9 @@ export default function Meals(props) {
 
   useEffect(() => {
     const getMeals = () => {
-      setMealsElements(meals.slice(0, TWELVE_FIRST_MEALS));
+      if (meals !== null) {
+        setMealsElements(meals.slice(0, TWELVE_FIRST_MEALS));
+      }
     };
     getMeals();
   }, [meals]);
@@ -47,6 +54,7 @@ export default function Meals(props) {
         title="Meals"
         search={ searchImg }
         history={ history }
+        path={ pathname }
       />
       <Recipes
         recipesList={ mealsElements }
