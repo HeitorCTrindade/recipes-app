@@ -58,7 +58,7 @@ describe('Test the SearchBar Component', () => {
   });
 });
 describe('Test the SearchBar Component', () => {
-  test('Verify if alert apear in the document when user type more than on letter and click in filter button.', () => {
+  test('Verify if alert apears in the document when user type more than on letter and click in filter button.', () => {
     renderPath('/drinks');
     const searchBtn = screen.getByTestId(SEARCH_ICON_BTN);
     userEvent.click(searchBtn);
