@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import {
   readLocalStorage,
@@ -9,10 +10,14 @@ import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
-export default function DoneRecipes() {
+export default function DoneRecipes(props) {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
   const allDoneRecipes = readLocalStorage(DONERECIPES_KEY);
+
+  const { history } = props;
+  const location = useLocation();
+  const { pathname } = location;
 
   useEffect(() => {
     setDoneRecipes(readLocalStorage(DONERECIPES_KEY));
@@ -155,6 +160,9 @@ export default function DoneRecipes() {
     <div>
       <Header
         title="Done Recipes"
+        history={ history }
+        search=""
+        path={ pathname }
       />
       <button
         type="button"
@@ -185,3 +193,8 @@ export default function DoneRecipes() {
     </div>
   );
 }
+DoneRecipes.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};

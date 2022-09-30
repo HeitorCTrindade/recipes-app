@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import {
@@ -11,6 +12,8 @@ import {
 export default function Profile(props) {
   const { history } = props;
   const [userEmail, setEmail] = useState('');
+  const location = useLocation();
+  const { pathname } = location;
 
   useEffect(() => {
     const { email } = readLocalStorage(USER_KEY);
@@ -19,7 +22,12 @@ export default function Profile(props) {
 
   return (
     <div>
-      <Header title="Profile" history={ history } />
+      <Header
+        title="Profile"
+        history={ history }
+        search=""
+        path={ pathname }
+      />
       <h1 data-testid="profile-email">{userEmail}</h1>
 
       <button
