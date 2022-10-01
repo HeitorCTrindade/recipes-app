@@ -26,8 +26,7 @@ export default function DoneRecipes(props) {
   const handleClickShareButton = (recipeType, recipeId) => {
     const currentURL = window.location.host;
     setIsLinkCopied(true);
-    if (recipeType === 'meal') copy(`http://${currentURL}/meals/${recipeId}`);
-    else copy(`http://${currentURL}/drinks/${recipeId}`);
+    copy(`http://${currentURL}/${recipeType}s/${recipeId}`);
   };
 
   const handleClickFilterByMealsButton = () => {
