@@ -34,7 +34,8 @@ function Login(props) {
     }));
   };
 
-  const handleLoginClickButton = () => {
+  const handleLoginClickButton = (event) => {
+    event.preventDefault();
     const { history } = props;
     const { email } = user;
     saveLocalStorageItem(USER_KEY, user.email);

@@ -6,6 +6,8 @@ import fetchDrinksApi from '../services/api/fetchDrinksApi';
 import RecipesContext from '../context/RecipesContext';
 import { MEALS_SAVE, DRINKS_SAVE } from '../constant';
 
+import '../styles/searchBar.css';
+
 export default function SearchBar({ path, history }) {
   const [radio, setRadio] = useState('Ingredient');
   const [input, setInput] = useState('');
@@ -68,65 +70,75 @@ export default function SearchBar({ path, history }) {
   }, [call]);
 
   return (
-    <div>
-      <input
-        data-testid="search-input"
-        type="text"
-        value={ input }
-        onChange={ ({ target }) => setInput(target.value) }
-      />
-      <label htmlFor="ingredient">
-        Ingredient
-        <input
-          type="radio"
-          name="ingredient"
-          id="ingredient"
-          value="Ingredient"
-          onChange={ handleChange }
-          checked={ radio === 'Ingredient' }
-          data-testid="ingredient-search-radio"
-
-        />
-      </label>
-
-      <label htmlFor="name">
-        Name
-        <input
-          type="radio"
-          name="name"
-          id="name"
-          value="Name"
-          onChange={ handleChange }
-          checked={ radio === 'Name' }
-          data-testid="name-search-radio"
-        />
-      </label>
-
-      <label htmlFor="first-letter">
-        First letter
-        <input
-          type="radio"
-          name="first-letter"
-          id="first-letter"
-          value="First letter"
-          onChange={ handleChange }
-          checked={ radio === 'First letter' }
-          data-testid="first-letter-search-radio"
-        />
-      </label>
-
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-        onClick={ () => {
+    <div className="search-bar-container">
+      <form
+        onSubmit={ (event) => {
+          event.preventDefault();
           verifyInput();
           requestApi();
         } }
+        className="search-form"
       >
-        Search
+        <input
+          data-testid="search-input"
+          type="text"
+          value={ input }
+          onChange={ ({ target }) => setInput(target.value) }
+          className="form-control input-group mb-2 search-input"
+        />
+        <div className="search-filters">
+          <label htmlFor="ingredient" className="form-check-label">
+            <input
+              type="radio"
+              name="ingredient"
+              id="ingredient"
+              value="Ingredient"
+              onChange={ handleChange }
+              checked={ radio === 'Ingredient' }
+              data-testid="ingredient-search-radio"
+              className="form-check-input"
 
-      </button>
+            />
+            Ingredient
+          </label>
 
+          <label htmlFor="name" className="form-check-label">
+            <input
+              type="radio"
+              name="name"
+              id="name"
+              value="Name"
+              onChange={ handleChange }
+              checked={ radio === 'Name' }
+              data-testid="name-search-radio"
+              className="form-check-input"
+            />
+            Name
+          </label>
+
+          <label htmlFor="first-letter" className="form-check-label">
+            <input
+              type="radio"
+              name="first-letter"
+              id="first-letter"
+              value="First letter"
+              onChange={ handleChange }
+              checked={ radio === 'First letter' }
+              data-testid="first-letter-search-radio"
+              className="form-check-input"
+            />
+            First letter
+          </label>
+        </div>
+
+        <button
+          type="submit"
+          data-testid="exec-search-btn"
+        >
+          Search
+
+        </button>
+      </form>
     </div>
   );
 }

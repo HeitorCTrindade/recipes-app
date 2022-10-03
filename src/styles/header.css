@@ -1,6 +1,4 @@
-/* header {
-  background-color: var(--foods-primmary-color);
-} */
+@import './root.css' ;
 
 .title-container {
   align-items: baseline;
@@ -26,5 +24,12 @@
 }
 
 .category-title {
-  color: var(--fourth-color);
+  color: var(--third-color);
+}
+
+@media ( min-width : 361px ) {
+
+  .category-header {
+    background-color: var(--secondary-color);
+  }
 }
