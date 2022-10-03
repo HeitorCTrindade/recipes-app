@@ -1,0 +1,55 @@
+@import './root.css' ;
+
+body {
+  background-color: var(--main-color);
+}
+
+.login-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  margin: auto;
+  width: 100vh;
+}
+
+.login-form {
+  box-shadow: 6px 10px 14px 1px rgba(0, 0, 0, 0.9);
+  padding: 15px;
+}
+
+.hero-title {
+  color: var(--secondary-color);
+}
+
+.login-button {
+  background-color: var(--secondary-color);
+  border-radius: 3px;
+  color: var(--main-color);
+  cursor: pointer;
+  padding: 3px;
+  width: 100%;
+}
+
+.login-button:disabled {
+  opacity: 0.7;
+}
+
+.login-button:hover:enabled {
+  opacity: 0.9;
+}
+
+
+@media ( max-width : 360px ) {
+
+  .login-container {
+    height: 100%;
+    margin-top: 50%;
+    width: 100%;
+  }
+
+  .login-form {
+    box-shadow: none;
+  }
+}

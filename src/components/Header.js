@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import profileImg from '../images/profileIcon.svg';
 import SearchBar from './SearchBar';
 
+import '../styles/header.css';
+import mealsIcon from '../images/categories/mealsIcon.svg';
+
 export default function Header({ title, search, history, path }) {
   const [toggle, setToggle] = useState(false);
   const handleClick = () => {
@@ -13,26 +16,38 @@ export default function Header({ title, search, history, path }) {
   };
   return (
     <header>
-      <h1 data-testid="page-title">{title}</h1>
-      <button
-        type="button"
-        onClick={ handleClick }
-      >
-        <img data-testid="profile-top-btn" src={ profileImg } alt="Profile-icon" />
-      </button>
+      <div className="title-container">
+        <button
+          type="button"
+          onClick={ handleClick }
+          className="header-button"
+        >
+          <img
+            data-testid="profile-top-btn"
+            src={ profileImg }
+            alt="Profile-icon"
+          />
+        </button>
 
-      {search !== ''
-        ? (
-          <button type="button" onClick={ handleToggle }>
-            <img
-              data-testid="search-top-btn"
-              src={ search }
-              alt="Search-Icon"
-            />
-          </button>)
-        : '' }
+        <h1 className="header-title">{'<Recipes App />'}</h1>
+        {search !== ''
+          ? (
+            <button type="button" onClick={ handleToggle } className="header-button">
+              <img
+                data-testid="search-top-btn"
+                src={ search }
+                alt="Search-Icon"
+              />
+            </button>)
+          : '' }
+      </div>
+      <div className="category-header">
+        {title === 'Meals' && (
+          <img src={ mealsIcon } alt="Meals" />
+        )}
+        <h1 data-testid="page-title" className="category-title">{title}</h1>
+      </div>
       {toggle ? <SearchBar path={ path } history={ history } /> : null }
-
     </header>
   );
 }

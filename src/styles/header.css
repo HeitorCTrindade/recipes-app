@@ -1,0 +1,30 @@
+/* header {
+  background-color: var(--foods-primmary-color);
+} */
+
+.title-container {
+  align-items: baseline;
+  background-color: var(--third-color);
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.header-title {
+  color: var(--secondary-color);
+}
+
+.header-button {
+  background-color: var(--third-color);
+}
+
+.category-header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.category-title {
+  color: var(--fourth-color);
+}
