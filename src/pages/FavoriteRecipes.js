@@ -8,7 +8,7 @@ import { FAV_RECIPES_KEY } from '../services/localStorageFuncs';
 
 const copy = require('clipboard-copy');
 
-export default function FavRecipes(props) {
+export default function FavoriteRecipes(props) {
   const { history } = props;
   const location = useLocation();
   const { pathname } = location;
@@ -21,10 +21,10 @@ export default function FavRecipes(props) {
     copy(`http://${currentURL}/${recipesType}s/${recipesId}`);
   }
   function mealFilter() {
-    setFavoriteRecipes(favoriteRecipes.filter((recipe) => recipe.type === 'meal'));
+    setFavoriteRecipes(storageFavs.filter((recipe) => recipe.type === 'meal'));
   }
   function drinkFilter() {
-    setFavoriteRecipes(favoriteRecipes.filter((recipe) => recipe.type === 'drink'));
+    setFavoriteRecipes(storageFavs.filter((recipe) => recipe.type === 'drink'));
   }
   function allFilter() {
     setFavoriteRecipes(storageFavs);
@@ -60,7 +60,7 @@ export default function FavRecipes(props) {
         Drinks
       </button>
       {favoriteRecipes !== null && favoriteRecipes.map((recipe, index) => (
-        <div key={ index }>
+        <div data-testid={ recipe.id } key={ index }>
 
           <Link
             to={ `/${recipe.type}s/${recipe.id}` }
@@ -99,6 +99,7 @@ export default function FavRecipes(props) {
           {copied && <h3>Link copied!</h3> }
           <button
             type="button"
+            data-testid={ `${recipe.id}-favorite-btn` }
             onClick={ () => {
               setFavoriteRecipes(storageFavs.filter((item) => item.id !== recipe.id));
               localStorage.setItem(FAV_RECIPES_KEY, JSON
@@ -118,7 +119,7 @@ export default function FavRecipes(props) {
     </div>
   );
 }
-FavRecipes.propTypes = {
+FavoriteRecipes.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
