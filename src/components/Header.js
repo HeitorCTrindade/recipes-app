@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import profileImg from '../images/profileIcon.svg';
+import mealsIcon from '../images/categories/mealsIcon.svg';
+import drinkIcon from '../images/drinkIcon.svg';
+
 import SearchBar from './SearchBar';
 
 import '../styles/header.css';
-import mealsIcon from '../images/categories/mealsIcon.svg';
 
 export default function Header({ title, search, history, path }) {
   const [toggle, setToggle] = useState(false);
@@ -26,6 +29,7 @@ export default function Header({ title, search, history, path }) {
             data-testid="profile-top-btn"
             src={ profileImg }
             alt="Profile-icon"
+            className="header-img"
           />
         </button>
 
@@ -37,13 +41,17 @@ export default function Header({ title, search, history, path }) {
                 data-testid="search-top-btn"
                 src={ search }
                 alt="Search-Icon"
+                className="header-img"
               />
             </button>)
           : '' }
       </div>
       <div className="category-header">
         {title === 'Meals' && (
-          <img src={ mealsIcon } alt="Meals" />
+          <img src={ mealsIcon } alt="Meals" className="title-image" />
+        )}
+        {title === 'Drinks' && (
+          <img src={ drinkIcon } alt="Drinks" className="title-image" />
         )}
         <h1 data-testid="page-title" className="category-title">{title}</h1>
       </div>
