@@ -6,6 +6,8 @@ import { fetchMealDetail } from '../services/fetchDetails';
 import RecipeDetails from '../components/RecipeDetails';
 import RecommendCarousel from '../components/RecommendCarousel';
 
+import '../styles/recipesDetails.css';
+
 import {
   readLocalStorage, DONERECIPES_KEY,
   INPROGRESS_RECIPES_KEY } from '../services/localStorageFuncs';
