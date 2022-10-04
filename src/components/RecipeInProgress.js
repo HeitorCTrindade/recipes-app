@@ -5,6 +5,7 @@ import shareIcon from '../images/shareIcon.svg';
 import FinishRecipe from './FinishRecipe';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import '../styles/RecipeInProgress.css';
 
 const copy = require('clipboard-copy');
 
@@ -149,27 +150,37 @@ function RecipeInProgress() {
 
   return (
     <>
-
-      <main>
+      <main className="recipe-inprogress-main">
         {
           keys && recipe[keys].map((item) => {
             if (keys === 'drinks') {
               return (
-                <div key={ item.idDrink }>
-                  <h1 data-testid="recipe-title">{ item.strDrink }</h1>
-                  <h3 data-testid="recipe-category">{ item.strAlcoholic }</h3>
+                <div
+                  key={ item.idDrink }
+                >
+                  <section className="header-recipe">
+                    <h1
+                      data-testid="recipe-title"
+                    >
+                      { item.strDrink }
+                    </h1>
+                    <h3 data-testid="recipe-category">{ item.strAlcoholic }</h3>
+                  </section>
                   <img
+                    className="recipe-img"
                     data-testid="recipe-photo"
                     src={ item.strDrinkThumb }
                     alt={ item.strDrink }
-                    style={ { width: '250px' } }
                   />
                   <p data-testid="instructions">{ item.strInstructions }</p>
                 </div>
               );
             }
             return (
-              <div key={ item.idMeal }>
+              <div
+                className="contair-text"
+                key={ item.idMeal }
+              >
                 <h1 data-testid="recipe-title">{ item.strMeal }</h1>
                 <h3 data-testid="recipe-category">{ item.strCategory }</h3>
                 <img
@@ -184,7 +195,7 @@ function RecipeInProgress() {
           })
         }
 
-        <div>
+        <div className="checkbox-input">
           {ingredients && ingredients
             .slice(0, halfLengthOfIngredients)
             .map((item, i) => (
@@ -202,7 +213,7 @@ function RecipeInProgress() {
         </div>
       </main>
 
-      <div>
+      <div className="div-buttons">
         <button
           type="button"
           data-testid="favorite-btn"
@@ -235,7 +246,6 @@ function RecipeInProgress() {
           Finish Recipe
         </button>
       </div>
-
     </>
   );
 }
