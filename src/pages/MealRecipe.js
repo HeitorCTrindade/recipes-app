@@ -60,6 +60,7 @@ export default function MealRecipe() {
       {doneRecipes === false && (
         <button
           type="button"
+          className="recipe-button"
           style={ { position: 'fixed', zIndex: '0', bottom: '0px' } }
           onClick={ handleClick }
           data-testid="start-recipe-btn"
