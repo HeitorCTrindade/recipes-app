@@ -6,7 +6,6 @@ import Footer from '../components/Footer';
 import {
   readLocalStorage,
   USER_KEY,
-  clearLocalStorage,
 } from '../services/localStorageFuncs';
 import profileIcon from '../images/profile/profileIcon.svg';
 import doneRecipes from '../images/profile/doneRecipes.svg';
@@ -55,7 +54,7 @@ export default function Profile(props) {
               alt="profileIcon"
             />
           </Link>
-          <div className='line' />
+          <div className="line" />
           <Link
             to="/favorite-recipes"
             data-testid="profile-favorite-btn"
@@ -66,7 +65,7 @@ export default function Profile(props) {
               alt="favoriteRecipes"
             />
           </Link>
-          <div className='line' />
+          <div className="line" />
           <Link
             to="/"
             data-testid="profile-logout-btn"

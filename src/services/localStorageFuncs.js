@@ -5,39 +5,6 @@ export const DONERECIPES_KEY = 'doneRecipes';
 export const FAV_RECIPES_KEY = 'favoriteRecipes';
 export const INPROGRESS_RECIPES_KEY = 'inProgressRecipes';
 
-// if (!JSON.parse(localStorage.getItem(MEALS_TOKEN_KEY))) {
-//   localStorage.setItem(MEALS_TOKEN_KEY, JSON.stringify(null));
-// }
-
-// if (!JSON.parse(localStorage.getItem(DRINKS_TOKEN_KEY))) {
-//   localStorage.setItem(DRINKS_TOKEN_KEY, JSON.stringify(null));
-// }
-
-// if (!JSON.parse(localStorage.getItem(USER_KEY))) {
-//   localStorage.setItem(USER_KEY, JSON.stringify({
-//     email: '',
-//   }));
-// }
-
-// if (!JSON.parse(localStorage.getItem(DONERECIPES_KEY))) {
-//   localStorage.setItem(DONERECIPES_KEY, JSON.stringify([]));
-// }
-
-// if (!JSON.parse(localStorage.getItem(FAV_RECIPES_KEY))) {
-//   localStorage.setItem(FAV_RECIPES_KEY, JSON.stringify([]));
-// }
-
-// if (!JSON.parse(localStorage.getItem(INPROGRESS_RECIPES_KEY))) {
-//   localStorage.setItem(INPROGRESS_RECIPES_KEY, JSON.stringify({
-//     drinks: {
-//       'id-da-bebida': [],
-//     },
-//     meals: {
-//       'id-da-comida': [],
-//     },
-//   }));
-// }
-
 export const readLocalStorage = (ITEM_KEY) => {
   if (!JSON.parse(localStorage.getItem(USER_KEY))) {
     localStorage.setItem(USER_KEY, JSON.stringify({

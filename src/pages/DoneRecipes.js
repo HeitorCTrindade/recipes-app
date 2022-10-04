@@ -7,6 +7,7 @@ import {
   DONERECIPES_KEY,
 } from '../services/localStorageFuncs';
 import shareIcon from '../images/shareIcon.svg';
+// import doneRecipesMock from '../tests/mocks/doneRecipesMock';
 
 const copy = require('clipboard-copy');
 
@@ -14,6 +15,7 @@ export default function DoneRecipes(props) {
   const [doneRecipes, setDoneRecipes] = useState([]);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
   const allDoneRecipes = readLocalStorage(DONERECIPES_KEY);
+  // const allDoneRecipes = doneRecipesMock;
 
   const { history } = props;
   const location = useLocation();
@@ -45,26 +47,21 @@ export default function DoneRecipes(props) {
 
   const generateMealCard = (mealObj, index) => (
     <div key={ mealObj.id } data-testid={ mealObj.id }>
-      <div className="card">
+      <div className="card" style={ { width: '18rem' } }>
         <Link
           to={ `/meals/${mealObj.id}` }
-          className="card"
-          style={ { width: '18rem' } }
         >
           <img
             src={ mealObj.image }
             alt={ mealObj.image }
             data-testid={ `${index}-horizontal-image` }
+            className="card-img-top"
           />
+          <h3 data-testid={ `${index}-horizontal-name` }>
+            {mealObj.name}
+          </h3>
         </Link>
-        <div className="card-body">
-          <Link
-            to={ `/meals/${mealObj.id}` }
-          >
-            <h3 data-testid={ `${index}-horizontal-name` }>
-              {mealObj.name}
-            </h3>
-          </Link>
+        <div>
           <h3 data-testid={ `${index}-horizontal-top-text` }>
             {`${mealObj.nationality} - ${mealObj.category}`}
           </h3>
@@ -77,7 +74,6 @@ export default function DoneRecipes(props) {
             onClick={ () => {
               handleClickShareButton(mealObj.type, mealObj.id);
             } }
-            className="btn btn-warning"
           >
             <img
               data-testid={ `${index}-horizontal-share-btn` }
@@ -104,7 +100,7 @@ export default function DoneRecipes(props) {
 
   const generateDrinkCard = (drinkObj, index) => (
     <div key={ drinkObj.id } data-testid={ drinkObj.id }>
-      <div className="card">
+      <div className="card" style={ { width: '18rem' } }>
         <Link
           to={ `/drinks/${drinkObj.id}` }
           className="card"
@@ -114,16 +110,13 @@ export default function DoneRecipes(props) {
             src={ drinkObj.image }
             alt={ drinkObj.image }
             data-testid={ `${index}-horizontal-image` }
+            className="card-img-top"
           />
+          <h3 data-testid={ `${index}-horizontal-name` }>
+            {drinkObj.name}
+          </h3>
         </Link>
-        <div className="card-body">
-          <Link
-            to={ `/drinks/${drinkObj.id}` }
-          >
-            <h3 data-testid={ `${index}-horizontal-name` }>
-              {drinkObj.name}
-            </h3>
-          </Link>
+        <div>
           <h3 data-testid={ `${index}-horizontal-top-text` }>
             {drinkObj.alcoholicOrNot}
           </h3>
@@ -136,7 +129,6 @@ export default function DoneRecipes(props) {
             onClick={ () => {
               handleClickShareButton(drinkObj.type, drinkObj.id);
             } }
-            className="btn btn-warning"
           >
             <img
               data-testid={ `${index}-horizontal-share-btn` }
@@ -166,7 +158,7 @@ export default function DoneRecipes(props) {
       <button
         type="button"
         onClick={ handleClickFilterAll }
-        className="btn btn-warning"
+        // className="btn btn-warning"
         data-testid="filter-by-all-btn"
       >
         All
@@ -174,7 +166,7 @@ export default function DoneRecipes(props) {
       <button
         type="button"
         onClick={ handleClickFilterByMealsButton }
-        className="btn btn-warning"
+        // className="btn btn-warning"
         data-testid="filter-by-meal-btn"
       >
         Meals
@@ -182,7 +174,7 @@ export default function DoneRecipes(props) {
       <button
         type="button"
         onClick={ handleClickFilterByDrinkButton }
-        className="btn btn-warning"
+        // className="btn btn-warning"
         data-testid="filter-by-drink-btn"
       >
         Drinks
