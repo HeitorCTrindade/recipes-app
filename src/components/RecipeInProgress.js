@@ -17,14 +17,12 @@ function RecipeInProgress() {
   const [showIfCopy, setShowIfCopy] = useState(false);
   const [enabledFinish, setEnabledFinish] = useState(true);
   const [checkIngredient, setCheckIngredient] = useState(0);
-
   const { id } = useParams();
   const { location: { pathname }, push } = useHistory();
-
+  const history = useHistory();
   useEffect(() => {
     const MEAL_URL_TO_FETCH = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
     const DRINK_URL_TO_FETCH = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
-
     const fetching = async () => {
       try {
         if (pathname.includes('meals')) {
@@ -78,7 +76,6 @@ function RecipeInProgress() {
     if (recipe) {
       const keysMealsOrDrinks = Object.keys(recipe);
       setKeys(keysMealsOrDrinks[0]);
-
       const data = recipe[keysMealsOrDrinks][0];
       const ingredientsKeys = Object.keys(data).filter((ingredient) => {
         if (ingredient.includes('strIngredient')) return true;
@@ -91,7 +88,6 @@ function RecipeInProgress() {
       setIngredients(filteredIngredients);
     }
   }, [recipe]);
-
   useEffect(() => {
     if (ingredients.length) {
       if (ingredients.length / 2 === checkIngredient) {
@@ -112,12 +108,10 @@ function RecipeInProgress() {
   const doesRecipeExistInLocalStorage = recipe
   && previousStorage
     .some((item) => item.id === recipe[test][0][`id${newStrin[0]}`]);
-
   const favoriteHandler = () => {
     const nationality = drinksOrMeals[1] === 'meals' ? recipe.meals[0].strArea : '';
     const alcoholicOrNot = drinksOrMeals[1] === 'drinks'
       ? recipe.drinks[0].strAlcoholic : '';
-
     const { strCategory } = recipe[test][0];
     const itemInfo = {
       id: recipe[test][0][`id${newStrin[0]}`],
@@ -127,7 +121,6 @@ function RecipeInProgress() {
       alcoholicOrNot,
       category: strCategory,
       image: recipe[test][0][`str${newStrin[0]}Thumb`] };
-
     const nextStorage = previousStorage.concat(itemInfo);
 
     if (doesRecipeExistInLocalStorage) {
@@ -140,7 +133,6 @@ function RecipeInProgress() {
     }
     setLStorage(JSON.stringify(nextStorage));
   };
-
   const shareHandler = () => {
     const link = window.location.href;
     const newLink = link.replace('/in-progress', '');
@@ -151,6 +143,9 @@ function RecipeInProgress() {
   return (
     <>
       <main className="recipe-inprogress-main">
+        <button type="button" onClick={ () => history.goBack() } className="back-button">
+          Go Back
+        </button>
         {
           keys && recipe[keys].map((item) => {
             if (keys === 'drinks') {
