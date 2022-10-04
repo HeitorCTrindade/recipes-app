@@ -7,13 +7,14 @@ import RecipesProvider from './context/RecipesProvider';
 import Login from './pages/Login';
 import Meals from './pages/Meals';
 import MealRecipe from './pages/MealRecipe';
-import MealInProgress from './pages/MealInProgress';
+// import MealInProgress from './pages/MealInProgress';
 import Drinks from './pages/Drinks';
 import DrinkRecipe from './pages/DrinkRecipe';
-import DrinkInProgress from './pages/DrinkInProgress';
+// import DrinkInProgress from './pages/DrinkInProgress';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import RecipeInProgress from './components/RecipeInProgress';
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
         <Route
           exact
           path="/meals/:id/in-progress"
-          render={ (props) => <MealInProgress { ...props } /> }
+          component={ RecipeInProgress }
         />
         <Route exact path="/drinks" component={ Drinks } />
         <Route
@@ -40,7 +41,7 @@ function App() {
         <Route
           exact
           path="/drinks/:id/in-progress"
-          render={ (props) => <DrinkInProgress { ...props } /> }
+          component={ RecipeInProgress }
         />
         <Route exact path="/profile" component={ Profile } />
         <Route exact path="/done-recipes" component={ DoneRecipes } />
