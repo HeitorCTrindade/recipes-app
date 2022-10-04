@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import {
@@ -8,6 +8,12 @@ import {
   USER_KEY,
   clearLocalStorage,
 } from '../services/localStorageFuncs';
+import profileIcon from '../images/profile/profileIcon.svg';
+import doneRecipes from '../images/profile/doneRecipes.svg';
+import favoriteRecipes from '../images/profile/favoriteRecipes.svg';
+import logout from '../images/profile/logout.svg';
+
+import '../styles/profile.css';
 
 export default function Profile(props) {
   const { history } = props;
@@ -21,50 +27,60 @@ export default function Profile(props) {
   }, []);
 
   return (
-    <div>
+    <section className="profile-page-container">
       <Header
         title="Profile"
         history={ history }
         search=""
         path={ pathname }
       />
-      <h1 data-testid="profile-email">{userEmail}</h1>
 
-      <button
-        type="button"
-        onClick={ () => {
-          history.push('/done-recipes');
-        } }
-        className="btn btn-warning"
-        data-testid="profile-done-btn"
-      >
-        Done Recipes
-      </button>
+      <div className="center">
+        <img
+          src={ profileIcon }
+          alt="profileIcon"
+        />
+        <h2 data-testid="profile-email">{userEmail}</h2>
+      </div>
 
-      <button
-        type="button"
-        onClick={ () => {
-          history.push('/favorite-recipes');
-        } }
-        className="btn btn-warning"
-        data-testid="profile-favorite-btn"
-      >
-        Favorite Recipes
-      </button>
-
-      <button
-        type="button"
-        onClick={ () => {
-          clearLocalStorage();
-          history.push('/');
-        } }
-        className="btn btn-warning"
-        data-testid="profile-logout-btn"
-      >
-        Logout
-      </button>
+      <div className="content">
+        <div className="card-links">
+          <Link
+            to="/done-recipes"
+            data-testid="profile-done-btn"
+            className="links"
+          >
+            <img
+              src={ doneRecipes }
+              alt="profileIcon"
+            />
+          </Link>
+          <div className='line' />
+          <Link
+            to="/favorite-recipes"
+            data-testid="profile-favorite-btn"
+            className="links"
+          >
+            <img
+              src={ favoriteRecipes }
+              alt="favoriteRecipes"
+            />
+          </Link>
+          <div className='line' />
+          <Link
+            to="/"
+            data-testid="profile-logout-btn"
+            className="links"
+          >
+            <img
+              src={ logout }
+              alt="logout"
+            />
+          </Link>
+        </div>
+      </div>
       <Footer history={ history } />
-    </div>
+    </section>
   );
 }
 
