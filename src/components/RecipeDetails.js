@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import clipboard from 'clipboard-copy';
+import { useHistory } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -13,6 +14,8 @@ import {
 import { INITIAL_RECIPE_INFOS } from '../constant';
 
 export default function RecipeDetails({ details, pathname }) {
+  const history = useHistory();
+
   const [heartIcon, setHeartIcon] = useState(whiteHeartIcon);
   const [recipeInfos, setRecipeInfos] = useState(INITIAL_RECIPE_INFOS);
   const [copyRecipe, setCopyRecipe] = useState(false);
@@ -98,52 +101,68 @@ export default function RecipeDetails({ details, pathname }) {
     setCopyRecipe(true);
   };
 
+  const backButton = () => {
+    history.goBack();
+  };
+
   return (
-    <div>
-      <div>
-        <div className="card text-bg-dark" style={ { width: '362px' } }>
-          <img
-            src={ recipeInfos.image }
-            alt={ recipeInfos.name }
-            style={ { width: '362px' } }
-            className="card-img"
-            data-testid="recipe-photo"
-          />
-          <div className="card-img-overlay">
-            <h4
-              className="card-title"
-              style={ { color: 'black' } }
-              data-testid="recipe-title"
-            >
-              {recipeInfos.name}
+    <div className="recipe-details">
+      <img
+        src={ recipeInfos.image }
+        alt={ recipeInfos.name }
+        className="card-img recipe-image"
+        data-testid="recipe-photo"
+      />
+      <div className="card-img-overlay overlay-button">
+        <button type="button" onClick={ backButton } className="back-button">
+          Go Back
+        </button>
+      </div>
+      <div className="buttons-area">
+        <div className="infos-box">
+          <h4
+            data-testid="recipe-title"
+          >
+            {recipeInfos.name}
 
-            </h4>
-            <p
-              className="card-text"
-              style={ { color: 'black' } }
-              data-testid="recipe-category"
-            >
-              {recipeInfos.type === 'meal'
-                ? recipeInfos.category : recipeInfos.alcoholicOrNot}
+          </h4>
+          -
+          <h4
+            data-testid="recipe-category"
+          >
+            {recipeInfos.type === 'meal'
+              ? recipeInfos.category : recipeInfos.alcoholicOrNot}
 
-            </p>
-          </div>
+          </h4>
         </div>
+        <div className="fav-and-share">
+          <button type="button" onClick={ favoriteRecipe }>
+            <img
+              className="fav-image"
+              src={ heartIcon }
+              alt="favImage"
+              data-testid="favorite-btn"
+            />
+          </button>
 
-        <button type="button" onClick={ favoriteRecipe }>
-          <img src={ heartIcon } alt="favImage" data-testid="favorite-btn" />
-        </button>
+          <button type="button" onClick={ copiedPathname }>
+            <img
+              className="share-image"
+              src={ shareIcon }
+              alt="favImage"
+              data-testid="share-btn"
+            />
+          </button>
 
-        <button type="button" onClick={ copiedPathname }>
-          <img src={ shareIcon } alt="favImage" data-testid="share-btn" />
-        </button>
-
-        {copyRecipe && <span>Link copied!</span>}
-
-        <h4>Ingredients</h4>
-        <div className="card" style={ { width: '335px', margin: '12px' } }>
-          <ul className="list-group list-group-flush">
-            {ingredientsAndMeasures.length > 0
+          {copyRecipe && <span>Link copied!</span>}
+        </div>
+      </div>
+      <div className="all-cards">
+        <div className="recipes-card">
+          <h4>Ingredients</h4>
+          <div className="card" style={ { width: '335px', margin: '12px' } }>
+            <ul className="list-group list-group-flush">
+              {ingredientsAndMeasures.length > 0
               && ingredientsAndMeasures.map((e, index) => (
                 <li
                   key={ index }
@@ -157,35 +176,39 @@ export default function RecipeDetails({ details, pathname }) {
                   {e.measure}
                 </li>
               ))}
-          </ul>
-        </div>
-
-        <h4>Instructions</h4>
-        <div className="card" style={ { width: '335px', margin: '12px' } }>
-          <p
-            className="card-text text-start"
-            style={ { padding: '5px' } }
-            data-testid="instructions"
-          >
-            {details.strInstructions}
-
-          </p>
-        </div>
-
-        {recipeInfos.type === 'meal' && (
-          <div>
-            <h4>Video</h4>
-            <iframe
-              width="300"
-              height="200"
-              src={ replaceWatch() }
-              data-testid="video"
-              allowFullScreen
-              title="Embedded youtube"
-            />
+            </ul>
           </div>
-        )}
+        </div>
+
+        <div className="recipes-card">
+          <h4>Instructions</h4>
+          <div className="card instruction-card">
+            <p
+              className="card-text text-start"
+              style={ { padding: '5px' } }
+              data-testid="instructions"
+            >
+              {details.strInstructions}
+
+            </p>
+          </div>
+        </div>
       </div>
+
+      {recipeInfos.type === 'meal' && (
+        <div className="recipes-card video-card">
+          <h4>Video</h4>
+          <iframe
+            width="355"
+            height="200"
+            src={ replaceWatch() }
+            data-testid="video"
+            allowFullScreen
+            title="Embedded youtube"
+            className="video-recipe"
+          />
+        </div>
+      )}
     </div>
   );
 }

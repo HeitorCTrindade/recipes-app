@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import mealsIcon from '../images/mealIcon.svg';
 import drinkIcon from '../images/drinkIcon.svg';
 
+import '../styles/footer.css';
+
 function Footer(props) {
   return (
     <footer data-testid="footer">
@@ -12,7 +14,7 @@ function Footer(props) {
           const { history } = props;
           history.push('/drinks');
         } }
-        className="btn btn-warning"
+        className="footer-button"
         src={ drinkIcon }
       >
         <img
@@ -28,7 +30,7 @@ function Footer(props) {
           const { history } = props;
           history.push('/meals');
         } }
-        className="btn btn-warning"
+        className="footer-button"
       >
         <img
           data-testid="meals-bottom-btn"

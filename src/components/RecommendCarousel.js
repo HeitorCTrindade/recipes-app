@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { Link } from 'react-router-dom';
 import { fetchMeals, fetchDrinks } from '../services/fetchRecipes';
 
 export default function RecommendCarousel({ pathname }) {
@@ -35,8 +36,8 @@ export default function RecommendCarousel({ pathname }) {
   }, [drinks, meals, pathname]);
 
   return (
-    <div>
-      <h6>Recommended</h6>
+    <div className="recipes-card recommend-carousel">
+      <h4>Recommended</h4>
       {pathname.includes('meals')
       && (
         <Carousel
@@ -44,7 +45,7 @@ export default function RecommendCarousel({ pathname }) {
           arrows
           autoPlaySpeed={ 3000 }
           centerMode={ false }
-          className=""
+          className="recommend-carousel"
           containerClass="container"
           dotListClass=""
           draggable
@@ -93,28 +94,29 @@ export default function RecommendCarousel({ pathname }) {
           swipeable
         >
           {sixRecipes.map((e, index) => (
-            <div
-              key={ index }
-              className="card"
-              style={ { width: '180px' } }
-              data-testid={ `${index}-recommendation-card` }
-            >
-              <img
-                className="card-img-top"
-                src={ e.strDrinkThumb }
-                alt={ e.strDrink }
-                style={ { height: '150px' } }
-              />
-              <div className="card-body">
-                <h5
-                  className="card-title"
-                  data-testid={ `${index}-recommendation-title` }
-                >
-                  { e.strDrink }
+            <Link key={ index } to={ `/drinks/${e.idDrink}` } className="carousel-link">
+              <div
+                className="card carousel-card"
+                style={ { width: '180px' } }
+                data-testid={ `${index}-recommendation-card` }
+              >
+                <img
+                  className="card-img-top"
+                  src={ e.strDrinkThumb }
+                  alt={ e.strDrink }
+                  style={ { height: '150px' } }
+                />
+                <div className="card-body">
+                  <h5
+                    className="card-title"
+                    data-testid={ `${index}-recommendation-title` }
+                  >
+                    { e.strDrink }
 
-                </h5>
+                  </h5>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </Carousel>)}
       {pathname.includes('drinks')
@@ -173,28 +175,29 @@ export default function RecommendCarousel({ pathname }) {
           swipeable
         >
           {sixRecipes.map((e, index) => (
-            <div
-              key={ index }
-              className="card"
-              style={ { width: '180px' } }
-              data-testid={ `${index}-recommendation-card` }
-            >
-              <img
-                className="card-img-top"
-                src={ e.strMealThumb }
-                alt={ e.strMeal }
-                style={ { height: '150px' } }
-              />
-              <div className="card-body">
-                <h5
-                  className="card-title"
-                  data-testid={ `${index}-recommendation-title` }
-                >
-                  { e.strMeal }
+            <Link key={ index } to={ `/meals/${e.idMeal}` } className="carousel-link">
+              <div
+                className="card carousel-card"
+                style={ { width: '180px' } }
+                data-testid={ `${index}-recommendation-card` }
+              >
+                <img
+                  className="card-img-top"
+                  src={ e.strMealThumb }
+                  alt={ e.strMeal }
+                  style={ { height: '150px' } }
+                />
+                <div className="card-body">
+                  <h5
+                    className="card-title"
+                    data-testid={ `${index}-recommendation-title` }
+                  >
+                    { e.strMeal }
 
-                </h5>
+                  </h5>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </Carousel>)}
     </div>

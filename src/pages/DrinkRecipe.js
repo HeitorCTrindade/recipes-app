@@ -5,6 +5,8 @@ import { fetchDrinksDetail } from '../services/fetchDetails';
 import RecipeDetails from '../components/RecipeDetails';
 import RecommendCarousel from '../components/RecommendCarousel';
 
+import '../styles/recipesDetails.css';
+
 import {
   readLocalStorage, DONERECIPES_KEY,
   INPROGRESS_RECIPES_KEY } from '../services/localStorageFuncs';
@@ -57,6 +59,7 @@ export default function DrinkRecipe() {
       {doneRecipes === false && (
         <button
           type="button"
+          className="recipe-button"
           style={ { position: 'fixed', zIndex: '0', bottom: '0px' } }
           onClick={ handleClick }
           data-testid="start-recipe-btn"
