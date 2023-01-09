@@ -20,11 +20,7 @@ function Login(props) {
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
   const { userDispatch } = useContext(RecipesContext);
 
-  const isValidEmail = (inputEmail) => String(inputEmail)
-    .toLowerCase()
-    .match(
-      /^[^ ]+@[^ ]+\.[a-z]{2,3}$/,
-    );
+  const isValidEmail = (inputEmail) => String(inputEmail).toLowerCase().match(/^[^ ]+@[^ ]+\.[a-z]{2,3}$/);
 
   const handleChanges = ({ target }) => {
     const { name, value } = target;
