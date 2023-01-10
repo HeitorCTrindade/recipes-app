@@ -47,9 +47,10 @@ export default function RecipeFilter(props) {
   };
 
   return (
-    <div>
+    <div className="btn-group me-2" role="group" aria-label="Second group">
       <button
         type="button"
+        className="btn btn-dark"
         onClick={ handleAllFilter }
         data-testid="All-category-filter"
       >
@@ -60,6 +61,7 @@ export default function RecipeFilter(props) {
         <button
           key={ index }
           type="button"
+          className="btn btn-dark"
           onClick={ () => handleClick(element) }
           data-testid={ `${element}-category-filter` }
         >

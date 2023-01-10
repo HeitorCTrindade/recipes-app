@@ -155,30 +155,35 @@ export default function DoneRecipes(props) {
         search=""
         path={ pathname }
       />
-      <button
-        type="button"
-        onClick={ handleClickFilterAll }
-        // className="btn btn-warning"
-        data-testid="filter-by-all-btn"
-      >
-        All
-      </button>
-      <button
-        type="button"
-        onClick={ handleClickFilterByMealsButton }
-        // className="btn btn-warning"
-        data-testid="filter-by-meal-btn"
-      >
-        Meals
-      </button>
-      <button
-        type="button"
-        onClick={ handleClickFilterByDrinkButton }
-        // className="btn btn-warning"
-        data-testid="filter-by-drink-btn"
-      >
-        Drinks
-      </button>
+      <div className="btn-group me-2" role="group" aria-label="Second group">
+        <button
+          type="button"
+          className="btn btn-dark"
+          onClick={ handleClickFilterAll }
+          // className="btn btn-warning"
+          data-testid="filter-by-all-btn"
+        >
+          All
+        </button>
+        <button
+          type="button"
+          className="btn btn-dark"
+          onClick={ handleClickFilterByMealsButton }
+          // className="btn btn-warning"
+          data-testid="filter-by-meal-btn"
+        >
+          Meals
+        </button>
+        <button
+          type="button"
+          className="btn btn-dark"
+          onClick={ handleClickFilterByDrinkButton }
+          // className="btn btn-warning"
+          data-testid="filter-by-drink-btn"
+        >
+          Drinks
+        </button>
+      </div>
       {isLinkCopied && <div><h3>Link copied!</h3></div>}
       {generateRecipesCards()}
     </div>

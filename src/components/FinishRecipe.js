@@ -92,15 +92,16 @@ function FinishRecipe(props) {
       htmlFor={ item }
       className={ checkedBox && 'Finish' }
     >
-      {`${item} ${ingredients[halfLengthOfIngredients + i]}`}
       <input
         type="checkbox"
         name={ item }
         id={ item }
         // essa propriedade checked aqui não esta alterando conforme o estado altera
         checked={ checkedBox }
+        className="form-check-input mt-0"
         onChange={ finishIngredient }
       />
+      {`${item} ${ingredients[halfLengthOfIngredients + i]}`}
     </label>
   );
 }
