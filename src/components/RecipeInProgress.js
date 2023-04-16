@@ -151,6 +151,7 @@ function RecipeInProgress() {
             if (keys === 'drinks') {
               return (
                 <div
+                  className="contair-text"
                   key={ item.idDrink }
                 >
                   <section className="header-recipe">
@@ -166,6 +167,7 @@ function RecipeInProgress() {
                     data-testid="recipe-photo"
                     src={ item.strDrinkThumb }
                     alt={ item.strDrink }
+                    style={ { width: '250px' } }
                   />
                   <p data-testid="instructions">{ item.strInstructions }</p>
                 </div>

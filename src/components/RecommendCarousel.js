@@ -126,7 +126,7 @@ export default function RecommendCarousel({ pathname }) {
           arrows
           autoPlaySpeed={ 3000 }
           centerMode={ false }
-          className=""
+          className="recommend-carousel"
           containerClass="container"
           dotListClass=""
           draggable
