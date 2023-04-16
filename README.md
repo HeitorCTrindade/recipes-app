@@ -324,7 +324,7 @@ As rotas utilizadas na aplicação são as seguintes:
 * Tela de receitas favoritas: `/favorite-recipes`.
 
 ## Contato
-Projeto desenvolvido por Heitor C. Trindade :robot:.
+Projeto desenvolvido por Heitor C. Trindade :robot: em conjunto com o time composto por <a href="#time-de-desenvolvimento">equipe</a>.
 
 [![Gmail][gmail-badge]][gmail-url] [![Linkedin][linkedin-badge]][linkedin-url] [![GitHub][github-badge]][github-url]
 
