@@ -130,7 +130,7 @@ Na organização das tarefas foi utilizado o modelo kanban, através da ferramen
 
 ## APIs
 
-### TheMealDB API
+#### TheMealDB API
 
 O [TheMealDB](https://www.themealdb.com/) é um banco de dados aberto, mantido pela comunidade, com receitas e ingredientes de todo o mundo.
 
@@ -221,7 +221,7 @@ https://www.themealdb.com/images/ingredients/{nome-do-ingrediente}-Small.png
 https://www.themealdb.com/images/ingredients/Lime-Small.png
 ```
 
-### The CockTailDB API
+#### The CockTailDB API
 
 Bem similar (inclusive mantida pela mesma entidade) a TheMealDB API, só que focado em bebidas.
 
