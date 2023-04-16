@@ -61,8 +61,8 @@ Esse é um projeto que foi desenvolvido e realizado em grupo. Sendo o grupo comp
   - Criar Hooks customizados
   - Utilizar o LocalStorage para salvar o status das receitas (favoritas, em andamendo com o seu passo a passo realizado e finalizadas)
   - Utilizar o LocalStorage para salvar os dados dos usuários relacionadas as receitas
-  - implementar testes para a aplicação
-  - estilização com bootstrap
+  - Implementar testes para a aplicação
+  - Estilização com bootstrap
 
 ---
 
